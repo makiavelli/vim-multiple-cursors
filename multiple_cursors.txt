@@ -1,0 +1,79 @@
+Multiple cursors plugin
+=======================
+
+How to play with multiple cursors plugin
+----------------------------------------
+
+- Run "MultipleCursors()"
+- In "Visual mode" select some position in which you want write the same thing with <F6>.
+- Enter in "Insert mode" and write your text, all position saved will be filled with your text.
+- Return to "Visual mode" and hit <F7> to clear all position previously saved.
+- If you want to power-off this plugin run "MultipleCursorsOff()"
+
+The script works in this way
+----------------------------
+
+First of all current window will be split, like this:
+
+---- Select some positions with <F6> ... ---
+  123456...
++---------------------+
+|1 Some stuff	      |
+|2		      |
+|3		      |   -> Main window
+|4  #		      |
+|5     #	      |
+|---------------------|
+| 		      |   -> Script window
+|       	      |
++---------------------+
+
+---- Before editing...you will show in the script window the selected positions ---
+  123456...
++---------------------+
+|1 Some stuff	      |
+|2		      |
+|3		      |   -> Main window
+|4		      |
+|5		      |
+|---------------------|
+| 4,2		      |   -> Script window
+| 5,5		      |
++---------------------+
+
+---- After editing... ---
+  123456...
++---------------------+
+|1 Some stuff	      |
+|2		      |
+|3		      |   -> Main window
+|4  Fuck the world    |
+|5     Fuck the world |
+|---------------------|
+| 4,2		      |   -> Script window
+| 5,5		      |
++---------------------+
+
+---- Clear the script window with <F7>... ---
+  123456...
++---------------------+
+|1 Some stuff	      |
+|2		      |
+|3		      |   -> Main window
+|4  Fuck the world    |
+|5     Fuck the world |
+|---------------------|
+| 		      |   -> Script window
+| 		      |
++---------------------+
+
+
+In the script window will be inserted col, row of current
+cursor at the pression of <F6>, in this format:
+row,col
+row,col
+row,col
+row,col
+
+To clean the script window the users must click on <F7>, 
+the editor will work in normal way.
