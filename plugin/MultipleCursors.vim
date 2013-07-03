@@ -128,6 +128,19 @@ endfunction
 	" Functions to cast list of coords inside dictionary and order key and value of the new dictionary
 function! CastCoordsListIntoDictionary()
 	" Function to cast list of coords inside dictionary
+	"
+	" Casting a list of coords into dictionary, like this:
+	"
+	" ------------------- FROM ---------------------
+	" ['137,1', '123,12', '137,5', '112,9', '137,8']
+	"
+	" ------------------- TO -----------------------
+	" { 'row_list' : [137, 123, 112], '137' : [12, 8, 1], '123' : [12], '112' : [9] }
+	"
+	" in shortly, all rows are grouped and become the keys of a dictionary, every row contain a list of cols.
+	" First key of the dictionary 'row_list', contain the list of all row retrieved. 
+	" Next, all lists inside the dictionary (both rows list than col list) will be ordered from bigger to lower
+	" this ensures the consistency of the coords saved
 
 	" retrieving all saved coords
 	if !exists("l:coords_list")
@@ -135,21 +148,17 @@ function! CastCoordsListIntoDictionary()
 	endif
 	let l:cursor_coords = GetSavedCoords()
 
-	" casting list of coords into dictionary, like this:
-	" ['137,1', '123,12', '137,5', '112,9', '137,8']
-	"
-	" ------------------- TO -----------------------
-	"
-	" { '137' : [12, 8, 1], '123' : [12], '112' : [9] }
-	" in shortly, all rows become the keys of a dictionary, every row contain a list of cols.
-	" both keys and list, respectively rows cols, are sorted in descending order,
-	" this ensures the consistency of the coords saved
-
+	" init of dictionary
 	if !exists("l:coords_dictionary")
 		let l:coords_dictionary = {}
 	endif
 
-	" casting list to dictionary
+	" init the key 'row_list'
+	if !exists("l:coords_dictionary['row_list']")
+		let l:coords_dictionary['row_list'] = []
+	endif
+
+	" casting list to dictionary as described above
 	for coord in l:cursor_coords
 		if coord
 			"[0] row, [1] col
@@ -159,6 +168,9 @@ function! CastCoordsListIntoDictionary()
 			if !exists("l:coords_dictionary[l:single_coordinate_list[0]]")
 				let l:coords_dictionary[l:single_coordinate_list[0]] = []
 			endif
+
+			" TODO: filling first key 'row_list' with this row, but only if NOT already exists
+			l:coords_dictionary['row_list'] = l:single_coordinate_list[0]
 
 			" filling rows with every col found, this will produce a list of rows for every col
 			" es. '173' : [1,32,7]
@@ -170,9 +182,9 @@ function! CastCoordsListIntoDictionary()
 endfunction
 
 function! OrderCoordsDictionary(coordsDictionary)
-	" Function to order a coords dictionary to ensures the consistency of the coords saved
+	" Function to order all lists inside of coords dictionary, this ensures the consistency of the coords saved
 
-	" TODO: order coords dictionary
+	" TODO: order all lists inside coords dictionary
 	echo a:coordsDictionary
 
 	return a:coordsDictionary
