@@ -169,8 +169,10 @@ function! CastCoordsListIntoDictionary()
 				let l:coords_dictionary[l:single_coordinate_list[0]] = []
 			endif
 
-			" TODO: filling first key 'row_list' with this row, but only if NOT already exists
-			l:coords_dictionary['row_list'] = l:single_coordinate_list[0]
+			" filling first key 'row_list' with this row, but only if NOT already exists inside the list
+			if !count(l:coords_dictionary['row_list'], l:single_coordinate_list[0])
+				let l:coords_dictionary['row_list'] = add(l:coords_dictionary['row_list'], l:single_coordinate_list[0])
+			endif
 
 			" filling rows with every col found, this will produce a list of rows for every col
 			" es. '173' : [1,32,7]
@@ -181,11 +183,29 @@ function! CastCoordsListIntoDictionary()
 	return l:coords_dictionary
 endfunction
 
-function! OrderCoordsDictionary(coordsDictionary)
-	" Function to order all lists inside of coords dictionary, this ensures the consistency of the coords saved
+function! CompareListItems(i1, i2)
+	" function to compare two elements inside a list
+	" http://vimdoc.sourceforge.net/htmldoc/eval.html - *sort()* *E702*
 
-	" TODO: order all lists inside coords dictionary
-	echo a:coordsDictionary
+	" echo \"item1=" . a:i1
+	" echo \"item2=" . a:i2
+	return a:i1 == a:i2 ? 0 : a:i1 < a:i2 ? 1 : -1
+endfunction
+
+"let sortedlist = sort(mylist, \"MyCompare")
+
+function! OrderListsInsideCoordsDictionary(coordsDictionary)
+	" Function to order all lists inside of coords dictionary in descending order, this ensures the consistency of the coords saved
+
+	" ordering rows list
+	let a:coordsDictionary['row_list'] = sort(a:coordsDictionary['row_list'], "CompareListItems")
+	
+	" ordering all lists inside dictionary
+	for coord in a:coordsDictionary['row_list']
+		if coord
+			let a:coordsDictionary[coord] = sort(a:coordsDictionary[coord], "CompareListItems")
+		endif
+	endfor
 
 	return a:coordsDictionary
 endfunction
@@ -196,7 +216,7 @@ function! CastAndOrderCoordsList()
 	if !exists("l:coords_dictionary_ordered")
 		let l:coords_dictionary_ordered = {}
 	endif
-	let l:coords_dictionary_ordered =  OrderCoordsDictionary(CastCoordsListIntoDictionary())
+	let l:coords_dictionary_ordered =  OrderListsInsideCoordsDictionary(CastCoordsListIntoDictionary())
 
 	return l:coords_dictionary_ordered
 endfunction
@@ -267,13 +287,16 @@ function! WriteCommonText()
 	endif
 	let l:common_text = GetCommonText()
 
+	let l:coords_dictionary_ordered = CastAndOrderCoordsList()
+
 	" loopping inside all cursor coords and write common text in every coord
-	for coord in GetSavedCoords()
-		if coord
-			call WriteStrOnCoordinates(l:common_text, coord)
+	for rows in l:coords_dictionary_ordered['row_list']
+		for cols in l:coords_dictionary_ordered[rows]
+			" call WriteStrOnCoordinates(l:common_text, [rows . ',' . cols])
+			echo "col: " . cols . " | row: " . rows
 			" echo \"common text: " .  l:common_text
 			" echo coord
-		endif
+		endfor
 	endfor
 endfunction
 
