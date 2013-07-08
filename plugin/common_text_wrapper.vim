@@ -1,19 +1,25 @@
-"	Vim MultipleCursors package - common text wrapper object
-"	Last Change: 2013 July 15
+"=============================================================================================
+"	Vim MultipleCursors package - Common text wrapper object
+"	Last Change: 2013 July 8
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
+"	Version: 0.1.0
 "
 " 	Features available:
 " 	- Retrieving comon text from common text buffer
 " 	- Writing of common text inside working buffer
+"=============================================================================================
 
-if exists("CTW_loaded")
-	delfun commonTextWrapper.getCommonText
-	delfun commonTextWrapper.writeCommonText
-	delfun commonTextWrapper.writeStrOnCoordinates
-endif
+function! commonTextWrapperInit()
+	" Init function
+	if exists("CTW_loaded")
+		delfun commonTextWrapper.getCommonText
+		delfun commonTextWrapper.writeCommonText
+		delfun commonTextWrapper.writeStrOnCoordinates
+	endif
 
-let commonTextWrapper = {}
+	let commonTextWrapper = {}
+endfunction
 
 function commonTextWrapper.getCommonText() dict
 	" Function to retrieve common text
@@ -79,7 +85,7 @@ function commonTextWrapper.writeStrOnCoordinates(stringToWrite, coordinates) dic
 
 
 	" writing string 'stringToWrite' starting from column and row retrieved
-	exe "normal i" . a:stringToWrite . "\<Esc>" 
+	exe "normal! i" . a:stringToWrite . "\<Esc>" 
 	
 endfunction
 

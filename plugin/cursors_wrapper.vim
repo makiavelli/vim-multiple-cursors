@@ -1,13 +1,16 @@
-"	Vim MultipleCursors package - cursors position wrapper object
-"	Last Change: 2013 July 15
+"=============================================================================================
+"	Vim MultipleCursors package - Cursors position wrapper object
+"	Last Change: 2013 July 8
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
+"	Version: 0.1.0
 "
 " 	Features available:
 " 	- Retrieving position of cursor (col and row)
 " 	- Saving position retrieved inside specific buffer
 " 	- Retrieving as dictionary all position saved inside a buffer
 " 	- Order position retrieved inside dictionary
+"=============================================================================================
 
 if exists("CW_loaded")
 	delfun commonTextWrapper.getCommonText

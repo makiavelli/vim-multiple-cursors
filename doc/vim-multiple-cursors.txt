@@ -1,5 +1,5 @@
-Multiple cursors plugin
-=======================
+vim-multiple-cursors plugin
+===========================
 
 How to play with multiple cursors plugin
 ----------------------------------------

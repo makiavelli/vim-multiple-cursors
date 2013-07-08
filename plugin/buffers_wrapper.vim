@@ -1,7 +1,9 @@
-"	Vim MultipleCursors package - buffers and windows wrapper object
-"	Last Change: 2013 July 15
+"=============================================================================================
+"	Vim MultipleCursors package - Buffers and windows wrapper object
+"	Last Change: 2013 July 8
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
+"	Version: 0.1.0
 "
 " 	Features available:
 " 	- Saving working window buffer id
@@ -10,6 +12,7 @@
 " 	- Retrieving coords window buffer id
 " 	- Saving common text window buffer id
 " 	- Retrieving common text window buffer id
+"=============================================================================================
 
 if exists("BW_loaded")
 	delfun buffersWrapper.setBaseWindowBufferId
