@@ -9,7 +9,7 @@
 "	this plugin help you to do the trick.
 "
 "						*multiplecursor-settings*
-"	to power off the auto key mapping:
+"	to skipping the auto key mapping:
 "		let g:multiple_cursors_map_keys = 0
 "
 "
@@ -25,13 +25,13 @@
 	endif
 
 	if g:multiple_cursors_map_keys
-"		TODO: define here the internal mapping
-		nnoremap <leader>d :call <sid>MultipleCursors()<CR>
+		" internal mapping
+		nnoremap <C-F3> :call multipleCursors.init()<CR>
 	endif
 
 "	Commands:
 "		Init 'vim-multiple-cursors' plugin:
-"		:MultipleCursors()
+"		:multipleCursors.init()
 "
 
 
@@ -40,37 +40,55 @@
 " vim-multiple-cursors plugin main functions
 "
 "===========================================
-
-if exists("MC_loaded")
-	delfun MultipleCursors
-	delfun ClearMultipleCursors
-	delfun InitMultipleCursorPlugin
+"
+if exists('s:multipleCursors["loaded"]')
+	delfun s:multipleCursors.init
+	delfun s:multipleCursors.clearMultipleCursors
+	delfun s:multipleCursors.initMultipleCursorPlugin
 endif
 
-function MultipleCursors()
+let s:multipleCursors = {}
+
+function s:multipleCursors.init(buffers_obj) dict
 	" - Function to create coords window and common text window
 
+	echo "multipleCursors.init called"
 	" creating coords window and saving buffer number associated with new window created
-	exe ":8new"
-	call SetCoordsWindowBufferId()
+	"exe \":8new"
+	"let l:buff_obj = copy(buffers_wrapper#GetObject())
+	"echo \"obj loaded: ".l:buff_obj.obj_msg
+	"let wrapper_loaded = l:buff_wrapper.obj_msg();
+	"echo \"wrapper loaded: \" . buffersWrapper["loaded"]
+	let a:buffers_obj["obj_msg"] = "success"
 
 	" creating common text window and save buffer number associated with new window created
-	exe ":100vne"
-	call SetCommonTextWindowBufferId()
+	"exe \":100vne"
+	"call SetCommonTextWindowBufferId()
 
 	" move cursor to base window
-	exe bufwinnr(GetBaseWindowBufferId()) . "wincmd w"
+	"exe bufwinnr(GetBaseWindowBufferId()) . \"wincmd w"
 endfunction
 
-function ClearMultipleCursors()
+function s:multipleCursors.clearMultipleCursors() dict
 	" TODO: Function to clear coords window/buffer and common text window/buffer
 endfunction
 
-function InitMultipleCursorPlugin()
+function s:multipleCursors.initMultipleCursorPlugin() dict
 	" Function to init the MultipleCursorPlugin
 
 	call SetBaseWindowBufferId()
 	call MultipleCursors()
 endfunction
 
-let MC_loaded = 1
+if exists("s:multipleCursors")
+	" successfully init of current object
+	let s:multipleCursors["loaded"] = 1
+endif
+
+" TODO: example of obj
+let s:buff_obj = buffers_wrapper#GetObject()
+echo "Ms: " . s:buff_obj.obj_msg
+
+call s:multipleCursors.init(s:buff_obj)
+
+echo "After: " . s:buff_obj.obj_msg
