@@ -1,6 +1,6 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Buffers and windows wrapper object
-"	Last Change: 2013 July 8
+"	Last Change: 2013 July 11
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
@@ -14,84 +14,126 @@
 " 	- Retrieving common text window buffer id
 "=============================================================================================
 
-" Init of current object
+" TODO: understand understand what to do here
 if exists('buffers_wrapper#buffersWrapper["loaded"]')
-	echo "del all fun"
-	delfun buffers_wrapper#buffersWrapper.setBaseWindowBufferId
-	delfun buffers_wrapper#buffersWrapper.getBaseWindowBufferId
-	delfun buffers_wrapper#buffersWrapper.setCoordsWindowBufferId
-	delfun buffers_wrapper#buffersWrapper.getCoordsWindowBufferId
-	delfun buffers_wrapper#buffersWrapper.setCommonTextWindowBufferId
-	delfun buffers_wrapper#buffersWrapper.getCommonTextWindowBufferId
+
+	finish
+	" all methods of this class are listed here
+	"delfun buffers_wrapper#buffersWrapper.baseWindowBufferId
+	"delfun buffers_wrapper#buffersWrapper.coordsWindowBufferId
+	"delfun buffers_wrapper#buffersWrapper.commonTextWindowBufferId
 endif
 
-let buffers_wrapper#buffersWrapper = {}
+" buffersWrapper class {{{
 
-function buffers_wrapper#buffersWrapper.setBaseWindowBufferId() dict
-	" Function to set current working window buffer id into global var
+	"==================================================
+	" To retrieve a NEW instance of this object call: buffers_wrapper#getObject()
+	"
+	" es. let s:my_fucking_obj = buffers_wrapper#getObject()
+	" now if you try to do:
+	"
+	" echo s:buff_obj.test_msg
+	" >buffers_wrapper: Fuck the world!
+	"==================================================
 
-	if !exists("g:base_window_buffer_id")
-		let g:base_window_buffer_id = 0
-	endif
-	let g:base_window_buffer_id = winbufnr(0)
-endfunction
+	let buffers_wrapper#buffersWrapper = {}
 
-function buffers_wrapper#buffersWrapper.getBaseWindowBufferId() dict
-	" Function to retrieve the working window buffer id
+	" Class fields {{{
+		if exists("buffers_wrapper#buffersWrapper")
+			" settings base fields of this class, all fields of
+			" this class are listed here
 
-	return g:base_window_buffer_id
-endfunction
+			" field to show if this object is already sourced
+			let buffers_wrapper#buffersWrapper["loaded"] = 1
 
-" Coords window functions
-function buffers_wrapper#buffersWrapper.setCoordsWindowBufferId() dict
-	" Function to set coords window buffer id into global var
+			" current obj status message
+			let buffers_wrapper#buffersWrapper["obj_msg"] = "No messages defined..."
 
-	if !exists("g:coords_list_bufnr")
-		let g:coords_list_bufnr = 0
-	endif
-	let g:coords_list_bufnr = winbufnr(0)
-	
-	echo "setCoordsWindowBufferId: "
-	echo g:coords_list_bufnr
-endfunction
+			" obj test message, to try call this field to check
+			" if you have instantiated correctly this object
+			let buffers_wrapper#buffersWrapper["test_msg"] = "buffers_wrapper: Fuck the world!"
 
-function buffers_wrapper#buffersWrapper.getCoordsWindowBufferId() dict
-	" Function to get coords window buffer id
+			" current obj status flag
+			let buffers_wrapper#buffersWrapper["status"] = 1
 
-	return g:coords_list_bufnr
-endfunction
+			" current obj error flag
+			let buffers_wrapper#buffersWrapper["error"] = 0
 
-" Common text window functions
-function buffers_wrapper#buffersWrapper.setCommonTextWindowBufferId() dict
-	" Function to set common window buffer id into global var
+			" field to handle last error retrieved TODO
+			let buffers_wrapper#buffersWrapper["handler_error"] = ""
 
-	if !exists("g:common_text_bufnr")
-		let g:common_text_bufnr = 0
-	endif
-	let g:common_text_bufnr = winbufnr(0)
-endfunction
+			" specific fields for current object
+			let buffers_wrapper#buffersWrapper["base_window_buffer_id"] = ""
+			let buffers_wrapper#buffersWrapper["coords_window_buffer_id"] = ""
+			let buffers_wrapper#buffersWrapper["common_text_window_buffer_id"] = ""
+		endif
+	" }}}
 
-function buffers_wrapper#buffersWrapper.getCommonTextWindowBufferId() dict
-	" Function to get common text window buffer id
+	" Class properties (getter/setter) {{{
 
-	return g:common_text_bufnr
-endfunction
+		"==================================================
+		" Current working window functions
+		"==================================================
 
-function! buffers_wrapper#GetObject()
-	return copy(s:buffersWrapper)
-endfunction
+		" Function to get/set current working window buffer id into current object {{{
+		function buffers_wrapper#buffersWrapper.baseWindowBufferId(...) dict
 
-function! buffers_wrapper#IsLoaded()
-	" Function to check if this object is loaded with success
-	return s:buffersWrapper["loaded"]
-endfunction
+			if a:0 == 1
+				" TODO: check, must be a number
+				let self.base_window_buffer_id = a:1
+			endif
 
-if exists("buffers_wrapper#buffersWrapper")
-	" successfully init of current object
-	let buffers_wrapper#buffersWrapper["loaded"] = 1
-	let buffers_wrapper#buffersWrapper["obj_msg"] = "No messages defined..."
-	let buffers_wrapper#buffersWrapper["status"] = 1
-	let buffers_wrapper#buffersWrapper["error"] = 0
-	let buffers_wrapper#buffersWrapper["handler_error"] = ""
-endif
+			return self.base_window_buffer_id
+		endfunction
+		" }}}
 
+		"==================================================
+		" Coords window functions
+		"==================================================
+
+		" Function to get/set coords window buffer id into current object {{{
+		function buffers_wrapper#buffersWrapper.coordsWindowBufferId(...) dict
+
+			if a:0 == 1
+				" TODO: check, must be a number
+				let self.coords_window_buffer_id = a:1
+			endif
+
+			return self.coords_window_buffer_id
+		endfunction
+		" }}}
+
+		"==================================================
+		" Common text window functions
+		"==================================================
+
+		" Function to get/set common window buffer id into current object {{{
+		function buffers_wrapper#buffersWrapper.commonTextWindowBufferId() dict
+
+			if a:0 == 1
+				" TODO: check, must be a number
+				let self.common_text_window_buffer_id = a:1
+			endif
+
+			return self.common_text_window_buffer_id
+		endfunction 
+		" }}}
+	" }}}
+
+	" Class methods {{{
+		" Function to retrieve a new instance of current object {{{
+		function! buffers_wrapper#getObject()
+
+			"echo g:buffers_wrapper#buffersWrapper
+			return copy(g:buffers_wrapper#buffersWrapper)
+		endfunction
+		" }}}
+
+		" Function to check if current object instance is loaded {{{
+		function! buffers_wrapper#isLoaded()
+			" Function to check if this object is loaded with success (not your instance)
+			return g:buffersWrapper["loaded"]
+		endfunction
+		" }}}
+	" }}} Class methods end
+" }}} buffersWrapper class end

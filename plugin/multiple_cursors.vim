@@ -1,6 +1,6 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Main file
-"	Last Change: 2013 July 8
+"	Last Change: 2013 July 11
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
@@ -85,10 +85,21 @@ if exists("s:multipleCursors")
 	let s:multipleCursors["loaded"] = 1
 endif
 
-" TODO: example of obj
-let s:buff_obj = buffers_wrapper#GetObject()
-echo "Ms: " . s:buff_obj.obj_msg
+if exists("s:buff_obj")
+	let s:buff_obj = {}
+endif
 
+" Playing with buffer_wrapper class
+let s:buff_obj = buffers_wrapper#getObject()
+let s:buff_obj_new = buffers_wrapper#getObject()
+
+echo "Ms (buff_obj): " . s:buff_obj.obj_msg
+echo "NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
 call s:multipleCursors.init(s:buff_obj)
+echo "After (buff_obj): " . s:buff_obj.obj_msg
+echo "NEW After (buff_obj): " . s:buff_obj_new.obj_msg
 
-echo "After: " . s:buff_obj.obj_msg
+call s:buff_obj.baseWindowBufferId(12)
+
+echo "Base window buff id saved: " . s:buff_obj.base_window_buffer_id
+echo "NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
