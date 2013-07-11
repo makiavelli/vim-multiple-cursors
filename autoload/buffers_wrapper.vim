@@ -32,7 +32,7 @@ endif
 	" es. let s:my_fucking_obj = buffers_wrapper#getObject()
 	" now if you try to do:
 	"
-	" echo s:buff_obj.test_msg
+	" echo s:my_fucking_obj.test_msg
 	" >buffers_wrapper: Fuck the world!
 	"==================================================
 
@@ -108,7 +108,7 @@ endif
 		"==================================================
 
 		" Function to get/set common window buffer id into current object {{{
-		function buffers_wrapper#buffersWrapper.commonTextWindowBufferId() dict
+		function buffers_wrapper#buffersWrapper.commonTextWindowBufferId(...) dict
 
 			if a:0 == 1
 				" TODO: check, must be a number
@@ -123,8 +123,6 @@ endif
 	" Class methods {{{
 		" Function to retrieve a new instance of current object {{{
 		function! buffers_wrapper#getObject()
-
-			"echo g:buffers_wrapper#buffersWrapper
 			return copy(g:buffers_wrapper#buffersWrapper)
 		endfunction
 		" }}}

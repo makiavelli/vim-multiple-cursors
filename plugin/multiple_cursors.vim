@@ -26,7 +26,7 @@
 
 	if g:multiple_cursors_map_keys
 		" internal mapping
-		nnoremap <C-F3> :call multipleCursors.init()<CR>
+		nnoremap <C-F3> :call InitPlugin()<CR>
 	endif
 
 "	Commands:
@@ -34,72 +34,37 @@
 "		:multipleCursors.init()
 "
 
-
 "===========================================
 "
 " vim-multiple-cursors plugin main functions
 "
 "===========================================
-"
-if exists('s:multipleCursors["loaded"]')
-	delfun s:multipleCursors.init
-	delfun s:multipleCursors.clearMultipleCursors
-	delfun s:multipleCursors.initMultipleCursorPlugin
-endif
 
-let s:multipleCursors = {}
+function! InitPlugin()
 
-function s:multipleCursors.init(buffers_obj) dict
-	" - Function to create coords window and common text window
+	" Playing with buffer_wrapper class
+	if exists("s:buff_obj")
+		let s:buff_obj = {}
+	endif
 
-	echo "multipleCursors.init called"
-	" creating coords window and saving buffer number associated with new window created
-	"exe \":8new"
-	"let l:buff_obj = copy(buffers_wrapper#GetObject())
-	"echo \"obj loaded: ".l:buff_obj.obj_msg
-	"let wrapper_loaded = l:buff_wrapper.obj_msg();
-	"echo \"wrapper loaded: \" . buffersWrapper["loaded"]
-	let a:buffers_obj["obj_msg"] = "success"
+	if exists("s:buff_obj_new")
+		let s:buff_obj_new = {}
+	endif
 
-	" creating common text window and save buffer number associated with new window created
-	"exe \":100vne"
-	"call SetCommonTextWindowBufferId()
+	let s:mult_cursor = multiple_cursors#getObject()
+	"echo \"aaa: " . s:mult_cursor.obj_msg
 
-	" move cursor to base window
-	"exe bufwinnr(GetBaseWindowBufferId()) . \"wincmd w"
+	let s:buff_obj = buffers_wrapper#getObject()
+	let s:buff_obj_new = buffers_wrapper#getObject()
+
+	echo "Ms (buff_obj): " . s:buff_obj.obj_msg
+	echo "NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
+	call multiple_cursors#MultipleCursors_init(s:buff_obj)
+	echo "After (buff_obj): " . s:buff_obj.obj_msg
+	echo "NEW After (buff_obj): " . s:buff_obj_new.obj_msg
+
+	call s:buff_obj.baseWindowBufferId(12)
+
+	echo "Base window buff id saved: " . s:buff_obj.base_window_buffer_id
+	echo "NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
 endfunction
-
-function s:multipleCursors.clearMultipleCursors() dict
-	" TODO: Function to clear coords window/buffer and common text window/buffer
-endfunction
-
-function s:multipleCursors.initMultipleCursorPlugin() dict
-	" Function to init the MultipleCursorPlugin
-
-	call SetBaseWindowBufferId()
-	call MultipleCursors()
-endfunction
-
-if exists("s:multipleCursors")
-	" successfully init of current object
-	let s:multipleCursors["loaded"] = 1
-endif
-
-if exists("s:buff_obj")
-	let s:buff_obj = {}
-endif
-
-" Playing with buffer_wrapper class
-let s:buff_obj = buffers_wrapper#getObject()
-let s:buff_obj_new = buffers_wrapper#getObject()
-
-echo "Ms (buff_obj): " . s:buff_obj.obj_msg
-echo "NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
-call s:multipleCursors.init(s:buff_obj)
-echo "After (buff_obj): " . s:buff_obj.obj_msg
-echo "NEW After (buff_obj): " . s:buff_obj_new.obj_msg
-
-call s:buff_obj.baseWindowBufferId(12)
-
-echo "Base window buff id saved: " . s:buff_obj.base_window_buffer_id
-echo "NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
