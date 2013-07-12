@@ -1,6 +1,6 @@
 "=============================================================================================
-"	vim-multiple-cursors package - Main file
-"	Last Change: 2013 July 11
+"	vim-multiple-cursors package - Main file (mapping only)
+"	Last Change: 2013 July 12
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
@@ -26,7 +26,7 @@
 
 	if g:multiple_cursors_map_keys
 		" internal mapping
-		nnoremap <C-F3> :call InitPlugin()<CR>
+		nnoremap <C-F3> :call multiple_cursors#InitPlugin()<CR>
 	endif
 
 "	Commands:
@@ -40,31 +40,3 @@
 "
 "===========================================
 
-function! InitPlugin()
-
-	" Playing with buffer_wrapper class
-	if exists("s:buff_obj")
-		let s:buff_obj = {}
-	endif
-
-	if exists("s:buff_obj_new")
-		let s:buff_obj_new = {}
-	endif
-
-	let s:mult_cursor = multiple_cursors#getObject()
-	"echo \"aaa: " . s:mult_cursor.obj_msg
-
-	let s:buff_obj = buffers_wrapper#getObject()
-	let s:buff_obj_new = buffers_wrapper#getObject()
-
-	echo "Ms (buff_obj): " . s:buff_obj.obj_msg
-	echo "NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
-	call multiple_cursors#MultipleCursors_init(s:buff_obj)
-	echo "After (buff_obj): " . s:buff_obj.obj_msg
-	echo "NEW After (buff_obj): " . s:buff_obj_new.obj_msg
-
-	call s:buff_obj.baseWindowBufferId(12)
-
-	echo "Base window buff id saved: " . s:buff_obj.base_window_buffer_id
-	echo "NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
-endfunction

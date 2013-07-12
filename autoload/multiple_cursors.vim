@@ -8,32 +8,11 @@
 "	If you want to write the same text in different points inside a file,
 "	this plugin help you to do the trick.
 "
-"						*multiplecursor-settings*
-"	to skipping the auto key mapping:
-"		let g:multiple_cursors_map_keys = 0
-"
-"
 " 	Features available:
 "	- function to start the multiple cursors plugin
 "	- function to power-off the multiple cursors plugin
 "	- function to clear coords window/buffer and common text window/buffer
 "=============================================================================================
-
-"	Mappings:
-	if !exists('g:multiple_cursors_map_keys')
-		let g:multiple_cursors_map_keys = 1
-	endif
-
-	if g:multiple_cursors_map_keys
-		" internal mapping
-		nnoremap <C-F3> :call multipleCursors.init()<CR>
-	endif
-
-"	Commands:
-"		Init 'vim-multiple-cursors' plugin:
-"		:multipleCursors.init()
-"
-
 
 if exists('multiple_cursors#multipleCursors["loaded"]')
 
@@ -81,9 +60,6 @@ endif
 
 			" field to handle last error retrieved TODO
 			let multiple_cursors#multipleCursors["handler_error"] = ""
-
-			" specific fields for current object
-			" TODO
 		endif
 	" }}}
 
@@ -95,7 +71,7 @@ endif
 		" }}}
 
 		" Function to create coords window and common text window {{{
-		function! multiple_cursors#MultipleCursors_init(buffers_obj)
+		function! multiple_cursors#MultipleCursors_createUserInterface(buffers_obj)
 
 			echo "init---"
 			" Saving base window buffer id
@@ -136,3 +112,48 @@ endif
 		" }}}
 	" }}} Class methods end
 " }}} multipleCursors class end
+
+
+"===========================================
+"
+" vim-multiple-cursors plugin main functions
+"
+"===========================================
+
+
+function! multiple_cursors#InitPlugin()
+
+	" TODO: create two windows and saving related buffer id inside
+	" buffers_wrapper class
+
+	" Playing with buffer_wrapper class
+	if exists("s:buff_obj")
+		let s:buff_obj = {}
+	endif
+
+	if exists("s:buff_obj_new")
+		let s:buff_obj_new = {}
+	endif
+
+	"let s:mult_cursor = multiple_cursors#getObject()
+	"echo \"aaa: " . s:mult_cursor.obj_msg
+
+	"let s:oopHandlerClass = oop_framework#oop_base#getObject()
+	"echo \"Ms (oop_base): " . s:oopHandlerClass.obj_msg
+
+	let s:buff_obj = buffers_wrapper#getObject()
+	"let s:buff_obj_new = buffers_wrapper#getObject()
+
+	"echo \"NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
+	call multiple_cursors#MultipleCursors_createUserInterface(s:buff_obj)
+
+	echo s:buff_obj.loaded
+	echo s:buff_obj.logMsg("log example")
+	"echo \"After (buff_obj): " . s:buff_obj.obj_msg
+	"echo \"NEW After (buff_obj): " . s:buff_obj_new.obj_msg
+
+	"call s:buff_obj.baseWindowBufferId(12)
+
+	"echo \"Base window buff id saved: " . s:buff_obj.base_window_buffer_id
+	"echo \"NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
+endfunction
