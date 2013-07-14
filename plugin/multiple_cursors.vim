@@ -9,7 +9,7 @@
 "	this plugin help you to do the trick.
 "
 "						*multiplecursor-settings*
-"	to skipping the auto key mapping:
+"	to skip the auto key mapping:
 "		let g:multiple_cursors_map_keys = 0
 "
 "=============================================================================================
