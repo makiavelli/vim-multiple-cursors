@@ -73,12 +73,14 @@ endif
 		" Function to create coords window and common text window {{{
 		function! multiple_cursors#MultipleCursors_createUserInterface(buffers_obj)
 
-			echo "init---"
 			" Saving base window buffer id
-			"call s:buff_obj.baseWindowBufferId(winbufnr(0))
+			echom s:buff_obj.logMsg("Saving base window buffer id")
+			call s:buff_obj.baseWindowBufferId(winbufnr(0))
 
 			" creating coords window and saving buffer number associated with new window created
 			8new
+			echom s:buff_obj.logMsg("Saving coords window buffer id")
+			call s:buff_obj.coordsWindowBufferId(winbufnr(0))
 			"let l:buff_obj = copy(buffers_wrapper#GetObject())
 			"echo \"obj loaded: ".l:buff_obj.obj_msg
 			"let wrapper_loaded = l:buff_wrapper.obj_msg();
@@ -87,13 +89,15 @@ endif
 			"call s:buff_obj.coordsWindowBufferId(winbufnr(0))
 
 			" creating common text window and save buffer number associated with new window created
-			"exe \":100vne"
+			100vne
+			echom s:buff_obj.logMsg("Saving common text window buffer id")
+			call s:buff_obj.commonTextWindowBufferId(winbufnr(0))
 			"call SetCommonTextWindowBufferId()
 			" Saving common text window buffer id
 			"call s:buff_obj.commonTextWindowBufferId(winbufnr(0))
 
 			" Move cursor to base window
-			"exe bufwinnr(s:buff_obj.baseWindowBufferId()) . \"wincmd w"
+			exe bufwinnr(s:buff_obj.baseWindowBufferId()) . "wincmd w"
 		endfunction
 		" }}}
 
@@ -120,40 +124,51 @@ endif
 "
 "===========================================
 
+" Init of buffers_wrapper class
+if exists("s:buff_obj")
+	let s:buff_obj = {}
+endif
 
+if exists("s:cursors_obj")
+	let s:cursors_obj = {}
+endif
+
+if exists("s:text_obj")
+	let s:text_obj = {}
+endif
+
+let s:buff_obj = buffers_wrapper#getObject()
+let s:cursors_obj = cursors_wrapper#getObject()
+let s:text_obj = common_text_wrapper#getObject()
+
+" Function to create base user interface to play with this plugin, will be created two windos.
+" First window to save the cursor coords, second window to insert the text to write {{{
 function! multiple_cursors#InitPlugin()
-
-	" TODO: create two windows and saving related buffer id inside
-	" buffers_wrapper class
-
-	" Playing with buffer_wrapper class
-	if exists("s:buff_obj")
-		let s:buff_obj = {}
-	endif
-
-	if exists("s:buff_obj_new")
-		let s:buff_obj_new = {}
-	endif
-
-	"let s:mult_cursor = multiple_cursors#getObject()
-	"echo \"aaa: " . s:mult_cursor.obj_msg
-
-	"let s:oopHandlerClass = oop_framework#oop_base#getObject()
-	"echo \"Ms (oop_base): " . s:oopHandlerClass.obj_msg
-
-	let s:buff_obj = buffers_wrapper#getObject()
-	"let s:buff_obj_new = buffers_wrapper#getObject()
-
-	"echo \"NEW Ms (buff_obj): " . s:buff_obj_new.obj_msg
 	call multiple_cursors#MultipleCursors_createUserInterface(s:buff_obj)
 
-	echo s:buff_obj.loaded
-	echo s:buff_obj.logMsg("log example")
-	"echo \"After (buff_obj): " . s:buff_obj.obj_msg
-	"echo \"NEW After (buff_obj): " . s:buff_obj_new.obj_msg
+	" saving buffers id inside cursors_wrapper class
+	let s:cursors_obj.base_window_buffer_id = s:buff_obj.base_window_buffer_id
+	let s:cursors_obj.coords_window_buffer_id = s:buff_obj.coords_window_buffer_id
+	let s:cursors_obj.common_text_window_buffer_id = s:buff_obj.common_text_window_buffer_id
 
-	"call s:buff_obj.baseWindowBufferId(12)
-
-	"echo \"Base window buff id saved: " . s:buff_obj.base_window_buffer_id
-	"echo \"NEW window buff id saved: " . s:buff_obj_new.base_window_buffer_id
+	" saving buffers id inside common_text_wrapper class
+	let s:text_obj.base_window_buffer_id = s:buff_obj.base_window_buffer_id
+	let s:text_obj.coords_window_buffer_id = s:buff_obj.coords_window_buffer_id
+	let s:text_obj.common_text_window_buffer_id = s:buff_obj.common_text_window_buffer_id
 endfunction
+" }}}
+
+" Function to saving the current coords of the cursor {{{
+function! multiple_cursors#SaveCoords()
+	call s:cursors_obj.saveCursorXY()
+endfunction
+" }}}
+
+" Function to write common text inside working buffer {{{
+function! multiple_cursors#WriteText()
+	" retrieving coords list dictionary ordered
+	let s:text_obj.ordered_coords_dictionary = s:cursors_obj.castAndOrderCoordsList()
+	" write text inside every coors 
+	call s:text_obj.writeCommonText()
+endfunction
+" }}}

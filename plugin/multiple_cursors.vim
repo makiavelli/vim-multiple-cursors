@@ -1,7 +1,7 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Main file (mapping only)
-"	Last Change: 2013 July 12
-"	Maintainer: Name Surname <name@mail.org>
+"	Last Change: 2013 July 14
+"	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
@@ -12,12 +12,15 @@
 "	to skipping the auto key mapping:
 "		let g:multiple_cursors_map_keys = 0
 "
-"
-" 	Features available:
-"	- function to start the multiple cursors plugin
-"	- function to power-off the multiple cursors plugin
-"	- function to clear coords window/buffer and common text window/buffer
 "=============================================================================================
+
+
+"===========================================
+"
+" vim-multiple-cursors plugin mapping
+"
+"===========================================
+
 
 "	Mappings:
 	if !exists('g:multiple_cursors_map_keys')
@@ -27,16 +30,14 @@
 	if g:multiple_cursors_map_keys
 		" internal mapping
 		nnoremap <C-F3> :call multiple_cursors#InitPlugin()<CR>
+		nnoremap <C-F4> :call multiple_cursors#SaveCoords()<CR>
+		nnoremap <C-F5> :call multiple_cursors#WriteText()<CR>
+
 	endif
 
 "	Commands:
 "		Init 'vim-multiple-cursors' plugin:
-"		:multipleCursors.init()
+"		:call multiple_cursors#InitPlugin()
 "
 
-"===========================================
-"
-" vim-multiple-cursors plugin main functions
-"
-"===========================================
 

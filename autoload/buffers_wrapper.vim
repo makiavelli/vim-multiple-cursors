@@ -1,6 +1,6 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Buffers and windows wrapper object
-"	Last Change: 2013 July 12
+"	Last Change: 2013 July 14
 "	Maintainer: Name Surname <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
@@ -16,12 +16,7 @@
 
 " TODO: understand understand what to do here
 if exists('buffers_wrapper#buffersWrapper["loaded"]')
-
 	finish
-	" all methods of this class are listed here
-	"delfun buffers_wrapper#buffersWrapper.baseWindowBufferId
-	"delfun buffers_wrapper#buffersWrapper.coordsWindowBufferId
-	"delfun buffers_wrapper#buffersWrapper.commonTextWindowBufferId
 endif
 
 " buffersWrapper class {{{

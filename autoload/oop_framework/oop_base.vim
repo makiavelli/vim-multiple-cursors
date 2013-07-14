@@ -37,7 +37,7 @@
 			" settings base fields of this class, all fields of
 			" this class are listed here
 
-			" class name, this field will be overwritten when
+			" class name, this field WILL BE OVERWRITTEN when
 			" another class extends oopHandler
 			let oop_framework#oop_base#oopHandler["class_name"] = "oop_framework#oop_base#oopHandler"
 
@@ -47,17 +47,16 @@
 			" current obj status message
 			let oop_framework#oop_base#oopHandler["obj_msg"] = "No messages defined..."
 
-			" obj test message, to try call this field to check
-			" if you have instantiated correctly this object
-			" this contain a function ref because all classes that
-			" extends this object had a CUSTOMIZED log, like
-			" this -> className: log message
+			" obj test message
 			let oop_framework#oop_base#oopHandler["test_msg"] = "Fuck the world!"
 
 			" current obj status flag
+			" 1 -> class successfully instantiated
 			let oop_framework#oop_base#oopHandler["status"] = 1
 
 			" current obj error flag
+			" 0 -> no error
+			" 1 -> error encountered
 			let oop_framework#oop_base#oopHandler["error"] = 0
 
 			" field to handle last error retrieved TODO
@@ -73,7 +72,7 @@
 		" }}}
 
 		" Function to log a message like this -> className: log message
-		" before of the log messagge will be prepended the class name
+		" At the log message will be prepended the class name
 		" that {{{
 		function oop_framework#oop_base#oopHandler.logMsg(...) dict
 
@@ -82,5 +81,6 @@
 			endif
 		endfunction
 		" }}}
+
 	" }}} Class methods end
 " }}} oopHandler class end
