@@ -1,7 +1,7 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Cursors position wrapper object
-"	Last Change: 2013 July 14
-"	Maintainer: Name Surname <name@mail.org>
+"	Last Change: 2013 July 16
+"	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
@@ -12,8 +12,7 @@
 " 	- Orders position retrieved inside dictionary
 "=============================================================================================
 
-" Init of current object
-if exists('cursors_wrapper#cursorsWrapper["loaded"]')
+if exists('cursorsWrapperLoaded')
 	finish
 endif
 
@@ -31,41 +30,37 @@ endif
 
 	let cursors_wrapper#cursorsWrapper = {}
 
-	" Extends oopHandler to give base methods to this class
-	let s:oopHandlerClass = oop_framework#oop_base#getObject()
-	let cursors_wrapper#cursorsWrapper = extend(cursors_wrapper#cursorsWrapper, s:oopHandlerClass, "keep")
-
-	" Class fields {{{
-		if exists("cursors_wrapper#cursorsWrapper")
-			" settings base fields of this class, all fields of
-			" this class are listed here
-
-			" current class name
-			let cursors_wrapper#cursorsWrapper["class_name"] = "cursors_wrapper#cursorsWrapper"
-
-			" field to show if this object is already sourced
-			let cursors_wrapper#cursorsWrapper["loaded"] = 1
-
-			" specific fields for current object
-			let cursors_wrapper#cursorsWrapper["base_window_buffer_id"] = ""
-			let cursors_wrapper#cursorsWrapper["coords_window_buffer_id"] = ""
-			let cursors_wrapper#cursorsWrapper["common_text_window_buffer_id"] = ""
-		endif
-	" }}}
-
 	" Class properties (getter/setter) {{{
 
 	" }}}
 
 	" Class methods {{{
-		" Function to retrieve a new instance of current object {{{
-		function! cursors_wrapper#getObject()
-			return copy(g:cursors_wrapper#cursorsWrapper)
+		" Function to retrieve a new instance of current class {{{
+		function cursors_wrapper#cursorsWrapper.New()
+
+			" Extends oopHandler to give base methods to this class
+			let l:cursWrapp = extend(copy(self), g:oop_framework#oop_base#oopHandler.New(), "keep")
+
+			" ### OVERRIDING CLASSES AND METHODS OF oopHandler HERE ###
+			" Class fields {{{
+				" current class name
+				let l:cursWrapp["class_name"] = "cursors_wrapper#cursorsWrapper"
+
+				" field to show if this object is already sourced
+				let l:cursWrapp["loaded"] = 1
+
+				" specific fields for current object
+				let l:cursWrapp["base_window_buffer_id"] = ""
+				let l:cursWrapp["coords_window_buffer_id"] = ""
+				let l:cursWrapp["common_text_window_buffer_id"] = ""
+			" }}} Class fields end
+
+			return l:cursWrapp
 		endfunction
 		" }}}
 
 		" Function to get the current coord of cursor {{{
-		function cursors_wrapper#cursorsWrapper.getCursorXY() dict
+		function cursors_wrapper#cursorsWrapper.getCursorXY()
 
 			" [bufnum, lnum, col, off]
 			" retrieve current cursor position in base window
@@ -79,7 +74,7 @@ endif
 		" }}}
 
 		" Function to retrieve the buffer from the coords window {{{
-		function cursors_wrapper#cursorsWrapper.getSavedCoords() dict
+		function cursors_wrapper#cursorsWrapper.getSavedCoords()
 
 			" - switching to previously coords window buffer (GetCoordsWindowBufferId())
 			" - read all line with getline(1, \"$\")
@@ -113,7 +108,7 @@ endif
 
 		" Functions to cast list of coords inside dictionary 
 		" and order keys and values of the new dictionary {{{
-		function cursors_wrapper#cursorsWrapper.castCoordsListIntoDictionary() dict
+		function cursors_wrapper#cursorsWrapper.castCoordsListIntoDictionary()
 			" Function to cast list of coords inside dictionary
 			"
 			" Casting a list of coords into dictionary, like this:
@@ -167,14 +162,13 @@ endif
 				endif
 			endfor
 
-			echo l:coords_dictionary
 			return l:coords_dictionary
 		endfunction
 		" }}}
 
 		" function to compare two elements inside a list
 		" http://vimdoc.sourceforge.net/htmldoc/eval.html - *sort()* *E702* {{{
-		function cursors_wrapper#cursorsWrapper.compareListItems(i1, i2) dict
+		function cursors_wrapper#CompareListItems(i1, i2)
 
 			" this ensures that will be compared two numbers
 			let l:num1 = str2nr(a:i1)
@@ -186,25 +180,29 @@ endif
 
 		" Function to order all lists inside of coords dictionary in descending order, this ensures
 		" the consistency of the coords saved {{{
-		function cursors_wrapper#cursorsWrapper.orderListsInsideCoordsDictionary(coordsDictionary) dict
+		function cursors_wrapper#cursorsWrapper.orderListsInsideCoordsDictionary(coordsDictionary)
+
+			call self.logMsg("Ordering all lists inside dictionary: " . string(a:coordsDictionary))
 
 			" ordering rows list
-			let a:coordsDictionary['row_list'] = sort(a:coordsDictionary['row_list'], "cursors_wrapper#cursorsWrapper.compareListItems")
-			
+			let a:coordsDictionary['row_list'] = sort(a:coordsDictionary['row_list'], "cursors_wrapper#CompareListItems")
+
 			" ordering all lists inside dictionary
 			for coord in a:coordsDictionary['row_list']
 				if coord
-					let a:coordsDictionary[coord] = sort(a:coordsDictionary[coord], "cursors_wrapper#cursorsWrapper.compareListItems")
+					let a:coordsDictionary[coord] = sort(a:coordsDictionary[coord], "cursors_wrapper#CompareListItems")
 					" echo a:coordsDictionary[coord]
 				endif
 			endfor
+
+			call self.logMsg("Lists inside dictionary successfully ordere: " . string(a:coordsDictionary))
 
 			return a:coordsDictionary
 		endfunction
 		" }}}
 
 		" Function to cast coords list into dictionary and orders keys and value {{{
-		function cursors_wrapper#cursorsWrapper.castAndOrderCoordsList() dict
+		function cursors_wrapper#cursorsWrapper.castAndOrderCoordsList()
 
 			if !exists("l:coords_dictionary_ordered")
 				let l:coords_dictionary_ordered = {}
@@ -216,13 +214,13 @@ endif
 		" }}}
 
 		" Function to write (or append) the cursor X(col) and Y(row) inside coords buffer {{{
-		function cursors_wrapper#cursorsWrapper.saveCursorXY() dict
+		function cursors_wrapper#cursorsWrapper.saveCursorXY()
 
 			if !exists("l:coords_xy")
 				let l:coords_xy = ""
 			endif
 			let l:coords_xy = self.getCursorXY()
-			echo "string retrived: ". l:coords_xy
+			call self.logMsg("string retrived: ". string(l:coords_xy))
 
 			"if current buffer is equal to base window buffer id, then cursor coords could be saved
 			if winbufnr(0) == self.base_window_buffer_id
@@ -251,3 +249,5 @@ endif
 		" }}}
 	" }}} Class methods end
 " }}} cursorsWrapper class end
+
+let cursorsWrapperLoaded = 1

@@ -1,7 +1,7 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Common text wrapper object
-"	Last Change: 2013 July 14
-"	Maintainer: Name Surname <name@mail.org>
+"	Last Change: 2013 July 16
+"	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
@@ -10,8 +10,7 @@
 " 	- Writing of common text inside working buffer
 "=============================================================================================
 
-" Init of current object
-if exists('common_text_wrapper#commonTextWrapper["loaded"]')
+if exists('commonTextWrapperLoaded')
 	finish
 endif
 
@@ -29,42 +28,38 @@ endif
 
 	let common_text_wrapper#commonTextWrapper = {}
 
-	" Extends oopHandler to give base methods to this class
-	let s:oopHandlerClass = oop_framework#oop_base#getObject()
-	let common_text_wrapper#commonTextWrapper = extend(common_text_wrapper#commonTextWrapper, s:oopHandlerClass, "keep")
-
-	" Class fields {{{
-		if exists("common_text_wrapper#commonTextWrapper")
-			" settings base fields of this class, all fields of
-			" this class are listed here
-
-			" current class name
-			let common_text_wrapper#commonTextWrapper["class_name"] = "common_text_wrapper#commonTextWrapper"
-
-			" field to show if this object is already sourced
-			let common_text_wrapper#commonTextWrapper["loaded"] = 1
-
-			" specific fields for current object
-			let common_text_wrapper#commonTextWrapper["base_window_buffer_id"] = ""
-			let common_text_wrapper#commonTextWrapper["coords_window_buffer_id"] = ""
-			let common_text_wrapper#commonTextWrapper["common_text_window_buffer_id"] = ""
-			let common_text_wrapper#commonTextWrapper["ordered_coords_dictionary"] = ""
-		endif
-	" }}}
-
 	" Class properties (getter/setter) {{{
 
 	" }}}
 
 	" Class methods {{{
-		" Function to retrieve a new instance of current object {{{
-		function! common_text_wrapper#getObject()
-			return copy(g:common_text_wrapper#commonTextWrapper)
+		" Function to retrieve a new instance of current class {{{
+		function common_text_wrapper#commonTextWrapper.New()
+
+			" Extends oopHandler to give base methods to this class
+			let l:commTextWrapp = extend(copy(self), g:oop_framework#oop_base#oopHandler.New(), "keep")
+
+			" ### OVERRIDING CLASSES AND METHODS OF oopHandler HERE ###
+			" Class fields {{{
+				" current class name
+				let l:commTextWrapp["class_name"] = "common_text_wrapper#commonTextWrapper"
+
+				" field to show if this object is already sourced
+				let l:commTextWrapp["loaded"] = 1
+
+				" specific fields for current object
+				let l:commTextWrapp["base_window_buffer_id"] = ""
+				let l:commTextWrapp["coords_window_buffer_id"] = ""
+				let l:commTextWrapp["common_text_window_buffer_id"] = ""
+				let l:commTextWrapp["ordered_coords_dictionary"] = {}
+			" }}} Class fields end
+
+			return l:commTextWrapp
 		endfunction
 		" }}}
 
 		" Function to retrieve common text from common text window {{{
-		function common_text_wrapper#commonTextWrapper.getCommonText() dict
+		function common_text_wrapper#commonTextWrapper.getCommonText()
 
 			" moving to common text window
 			exe bufwinnr(self.common_text_window_buffer_id) . "wincmd w"
@@ -83,7 +78,7 @@ endif
 		" }}}
 
 		" Function to write common text in all of saved coords {{{
-		function common_text_wrapper#commonTextWrapper.writeCommonText() dict
+		function common_text_wrapper#commonTextWrapper.writeCommonText()
 
 			" retrieving common text
 			if !exists("l:common_text")
@@ -108,7 +103,7 @@ endif
 		" }}}
 
 		" Function to write the string 'stringToWrite' starting from the coordinates 'coordinates' {{{
-		function common_text_wrapper#commonTextWrapper.writeStrOnCoordinates(stringToWrite, coordinates) dict
+		function common_text_wrapper#commonTextWrapper.writeStrOnCoordinates(stringToWrite, coordinates)
 
 			" split coordinates string 'row,col', inside a list
 			if !exists("l:single_coordinates_list")
@@ -134,3 +129,5 @@ endif
 		" }}}
 	" }}} Class methods end
 " }}} cursorsWrapper class end
+
+let commonTextWrapperLoaded = 1

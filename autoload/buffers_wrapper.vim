@@ -1,7 +1,7 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Buffers and windows wrapper object
-"	Last Change: 2013 July 14
-"	Maintainer: Name Surname <name@mail.org>
+"	Last Change: 2013 July 16
+"	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
@@ -14,8 +14,7 @@
 " 	- Retrieving common text window buffer id
 "=============================================================================================
 
-" TODO: understand understand what to do here
-if exists('buffers_wrapper#buffersWrapper["loaded"]')
+if exists('buffersWrapperLoaded')
 	finish
 endif
 
@@ -31,30 +30,35 @@ endif
 	" >buffers_wrapper: Fuck the world!
 	"==================================================
 
+	" start the prototype
 	let buffers_wrapper#buffersWrapper = {}
 
-	" Extends oopHandler to give base methods to this class
-	let s:oopHandlerClass = oop_framework#oop_base#getObject()
-	let buffers_wrapper#buffersWrapper = extend(buffers_wrapper#buffersWrapper, s:oopHandlerClass, "keep")
+	" Class methods {{{
 
-	" Class fields {{{
-		if exists("buffers_wrapper#buffersWrapper")
-			" settings base fields of this class, all fields of
-			" this class are listed here
+		" Function to retrieve a new instance of current class {{{
+		function buffers_wrapper#buffersWrapper.New()
 
-			" current class name
-			let buffers_wrapper#buffersWrapper["class_name"] = "buffers_wrapper#buffersWrapper"
+			" Extends oopHandler to give base methods to this class
+			let l:buffWrapp = extend(copy(self), g:oop_framework#oop_base#oopHandler.New(), "keep")
 
-			" field to show if this object is already sourced
-			let buffers_wrapper#buffersWrapper["loaded"] = 1
+			" ### OVERRIDING CLASSES AND METHODS OF oopHandler HERE ###
+			" Class fields {{{
+				" current class name
+				let l:buffWrapp["class_name"] = "buffers_wrapper#buffersWrapper"
 
-			" specific fields for current object
-			let buffers_wrapper#buffersWrapper["base_window_buffer_id"] = ""
-			let buffers_wrapper#buffersWrapper["coords_window_buffer_id"] = ""
-			let buffers_wrapper#buffersWrapper["common_text_window_buffer_id"] = ""
-		endif
-	" }}}
+				" field to show if this object is already sourced
+				let l:buffWrapp["loaded"] = 1
 
+				" specific fields for current object
+				let l:buffWrapp["base_window_buffer_id"] = ""
+				let l:buffWrapp["coords_window_buffer_id"] = ""
+				let l:buffWrapp["common_text_window_buffer_id"] = ""
+			" }}} Class fields end
+
+			return l:buffWrapp
+		endfunction
+		" }}}
+	" }}} Class methods end
 	" Class properties (getter/setter) {{{
 
 		"==================================================
@@ -62,7 +66,7 @@ endif
 		"==================================================
 
 		" Function to get/set current working window buffer id into current object {{{
-		function buffers_wrapper#buffersWrapper.baseWindowBufferId(...) dict
+		function buffers_wrapper#buffersWrapper.baseWindowBufferId(...)
 
 			if a:0 == 1
 				" TODO: check, must be a number
@@ -78,7 +82,7 @@ endif
 		"==================================================
 
 		" Function to get/set coords window buffer id into current object {{{
-		function buffers_wrapper#buffersWrapper.coordsWindowBufferId(...) dict
+		function buffers_wrapper#buffersWrapper.coordsWindowBufferId(...)
 
 			if a:0 == 1
 				" TODO: check, must be a number
@@ -94,7 +98,7 @@ endif
 		"==================================================
 
 		" Function to get/set common window buffer id into current object {{{
-		function buffers_wrapper#buffersWrapper.commonTextWindowBufferId(...) dict
+		function buffers_wrapper#buffersWrapper.commonTextWindowBufferId(...)
 
 			if a:0 == 1
 				" TODO: check, must be a number
@@ -105,12 +109,6 @@ endif
 		endfunction 
 		" }}}
 	" }}}
-
-	" Class methods {{{
-		" Function to retrieve a new instance of current object {{{
-		function! buffers_wrapper#getObject()
-			return copy(g:buffers_wrapper#buffersWrapper)
-		endfunction
-		" }}}
-	" }}} Class methods end
 " }}} buffersWrapper class end
+
+let buffersWrapperLoaded = 1
