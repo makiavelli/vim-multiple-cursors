@@ -6,12 +6,13 @@
 "	Version: 0.1.0
 "
 " 	Features available:
-" 	- Retrieving current position of cursor (col and row)
-" 	- Saving position retrieved inside a specific buffer
-" 	- Retrieving as dictionary all positions saved inside a buffer
-" 	- Orders position retrieved inside dictionary
+" 	- Function to retrieve current cursor position (col and row)
+" 	- Function to save cursor position inside a specific buffer
+" 	- Function to cast all coords saved inside a dictionary
+" 	- Function to reorder a coords dictionary
 "=============================================================================================
 
+" Avoids further load
 if exists('cursorsWrapperLoaded')
 	finish
 endif

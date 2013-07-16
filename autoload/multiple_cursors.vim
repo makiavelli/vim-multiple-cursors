@@ -9,11 +9,14 @@
 "	this plugin help you to do the trick.
 "
 " 	Features available:
-"	- function to start the multiple cursors plugin
-"	- function to power-off the multiple cursors plugin
-"	- function to clear coords window/buffer and common text window/buffer
+"	- function to create user interface
+"	- function to save cursor coords
+"	- function to write common text
+"	- TODO: function to clear all saved coords
+"	- TODO: function to power off the vim-multiple-cursors plugin
 "=============================================================================================
 
+" Avoids further load
 if exists('vimMultipleCursorsLoaded')
 	finish
 endif

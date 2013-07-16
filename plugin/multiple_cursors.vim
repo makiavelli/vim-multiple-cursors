@@ -1,5 +1,5 @@
 "=============================================================================================
-"	vim-multiple-cursors package - Main file (mapping only)
+"	vim-multiple-cursors package - Mapping
 "	Last Change: 2013 July 14
 "	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
@@ -22,7 +22,7 @@
 "===========================================
 
 
-"	Mappings:
+	" Mappings:
 	if !exists('g:multiple_cursors_map_keys')
 		let g:multiple_cursors_map_keys = 1
 	endif
@@ -35,9 +35,6 @@
 
 	endif
 
-"	Commands:
-"		Init 'vim-multiple-cursors' plugin:
-"		:call multiple_cursors#InitPlugin()
-"
-
-
+	" Commands:
+	" 	Init 'vim-multiple-cursors' plugin:
+	" 	:call multiple_cursors#InitPlugin()

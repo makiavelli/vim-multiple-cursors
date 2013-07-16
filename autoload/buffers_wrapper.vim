@@ -6,14 +6,12 @@
 "	Version: 0.1.0
 "
 " 	Features available:
-" 	- Saving working window buffer id
-" 	- Retrieving working window buffer id
-" 	- Saving coords window buffer id
-" 	- Retrieving coords window buffer id
-" 	- Saving common text window buffer id
-" 	- Retrieving common text window buffer id
+" 	- Function to save/get working window buffer id
+" 	- Function to save/get coords window buffer id
+" 	- Function to save/get common text window  id
 "=============================================================================================
 
+" Avoids further load
 if exists('buffersWrapperLoaded')
 	finish
 endif

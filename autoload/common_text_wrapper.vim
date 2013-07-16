@@ -6,10 +6,11 @@
 "	Version: 0.1.0
 "
 " 	Features available:
-" 	- Retrieving comon text from common text buffer
-" 	- Writing of common text inside working buffer
+" 	- Funtion to retrieve common text from a common text buffer
+" 	- Function to write common text inside a working buffer
 "=============================================================================================
 
+" Avoids further load
 if exists('commonTextWrapperLoaded')
 	finish
 endif
