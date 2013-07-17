@@ -29,12 +29,16 @@
 
 	if g:multiple_cursors_map_keys
 		" internal mapping
-		nnoremap <C-F3> :call multiple_cursors#InitPlugin()<CR>
-		nnoremap <C-F4> :call multiple_cursors#SaveCoords()<CR>
-		nnoremap <C-F5> :call multiple_cursors#WriteText()<CR>
+		"nnoremap <C-F3> :call multiple_cursors#multiple_cursors#InitPlugin()<CR>
+		"nnoremap <C-F4> :call multiple_cursors#multiple_cursors#SaveCoords()<CR>
+		"nnoremap <C-F5> :call multiple_cursors#multiple_cursors#WriteText()<CR>
+
+		vnoremap <C-F3> :call multiple_cursors#multiple_cursors#InitPlugin()<CR>
+		vnoremap <C-F4> :call multiple_cursors#multiple_cursors#SaveCoords()<CR>
+		vnoremap <C-F5> :call multiple_cursors#multiple_cursors#WriteText()<CR>
 
 	endif
 
 	" Commands:
 	" 	Init 'vim-multiple-cursors' plugin:
-	" 	:call multiple_cursors#InitPlugin()
+	" 	:call multiple_cursors#multiple_cursors#InitPlugin()
