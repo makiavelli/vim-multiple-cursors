@@ -1,19 +1,41 @@
 "=============================================================================================
 "	vim-oop-base package - Prototype-based programming framework for VIM
-"	Last Change: 2013 July 16
+"	Last Change: 2013 July 17
 "	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
-"	This file is intended as base handler of your prototype.
-"	To extends your existing prototypes do it this way:
+"	This file is intended as base handler of your prototypes.
+"	To extends your existing prototypes do the follow two steps:
 "
-"	let l:myNewPrototype = extend(copy(l:myNewPrototype), g:oop_framework#oop_base#oopHandler.New(), 'keep')
+"	..................................................
+"	1) DEFINE YOUR PROTOTYPE
+"		let myFuckingPrototype = {}
 "
-"	Now your new prototype 'l:myNewPrototype' inherited methods and
+"		Create a constructor for your prototype, like this
+"		function myFuckingPrototype.New()
+"			let l:myNewPrototype = extend(copy(self), g:oop_framework#oop_base#oopHandler.New(), 'keep')
+"
+"			return l:myNewPrototype
+"		endfunction
+"
+"
+"	2) USE YOUR PROTOTYPE
+"		let aNewPrototype = myFuckingPrototype.New()
+"
+"
+"	NOW IF YOU TRY TO DO
+"		echo aNewPrototype.test_msg
+"
+""	YOU WILL SEE SOMETHING LIKE THIS
+"		'Fuck the world!'
+"
+"		
+"	Now your new prototype 'aNewPrototype' inherited all base methods and
 "	properties from oopHandler
+"	..................................................
 "
-" 	Features available:
+" 	Prototype's features available:
 " 	- Function to log message
 " 	- TODO: Function to handler exceptions
 "=============================================================================================
@@ -26,13 +48,9 @@ endif
 " oopHandler prototype {{{
 
 	"==================================================
-	" Uses this class to extend the functionality of another class
 	"
-	" es. let s:my_fucking_obj = oop_framework#oop_base#oopHandler.New()
-	" now if you try to do:
+	" Uses this prototype to extend the functionality of another prototype
 	"
-	" echo s:my_fucking_obj.test_msg
-	" >oop_framework: Fuck the world!
 	"==================================================
 
 	let oop_framework#oop_base#oopHandler = {}
@@ -46,6 +64,7 @@ endif
 		let l:oopBaseInstance = copy(self)
 
 		" Prototype fields {{{
+
 			" Base fields of this prototype. NB: this fields WILL BE OVERWRITTEN if
 			" another prototype extends oopHandler and define
 			" her own fields
@@ -53,7 +72,7 @@ endif
 			" prototype name
 			let l:oopBaseInstance["class_name"] = "oop_framework#oop_base#oopHandler"
 
-			" field to show if this object is already sourced
+			" field to show if this prototype was already sourced
 			let l:oopBaseInstance["loaded"] = 0
 
 			" status message
@@ -66,12 +85,12 @@ endif
 			" 1 -> prototype successfully instantiated
 			let l:oopBaseInstance["status"] = 1
 
-			"  error flag
+			" error flag
 			" 0 -> no error
 			" 1 -> error encountered
 			let l:oopBaseInstance["error"] = 0
 
-			" field to handle last error retrieved TODO
+			" TODO: field to handle last error retrieved
 			let l:oopBaseInstance["handler_error"] = ""
 		" }}} Prototype fields end
 
@@ -80,9 +99,9 @@ endif
 	" }}}
 
 	" Prototype methods {{{
-		" Function to log a message like this -> className: log message
-		" At the log message will be prepended the class name
-		" that {{{
+
+		" Function to log a message like this -> 'prototypeName: your log message'
+		" The log message will be prepended with the class name {{{
 		function oop_framework#oop_base#oopHandler.logMsg(...)
 
 			if a:0 == 1

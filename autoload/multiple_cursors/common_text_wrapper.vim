@@ -1,12 +1,12 @@
 "=============================================================================================
-"	vim-multiple-cursors package - Common text wrapper object
-"	Last Change: 2013 July 16
+"	vim-multiple-cursors package - Common text wrapper prototype
+"	Last Change: 2013 July 17
 "	Maintainer: makiavelli <name@mail.org>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
-" 	Features available:
-" 	- Funtion to retrieve common text from a common text buffer
+" 	Prototype's features available:
+" 	- Function to retrieve common text from a common text buffer
 " 	- Function to write common text inside a working buffer
 "=============================================================================================
 
@@ -18,9 +18,9 @@ endif
 " cursorsWrapper prototype {{{
 
 	"==================================================
-	" To retrieve a NEW instance of this object call: cursors_wrapper#getObject()
+	" To retrieve a NEW instance of this prototype call: multiple_cursors#common_text_wrapper#commonTextWrapper.New()
 	"
-	" es. let s:my_fucking_obj = multiple_cursors#common_text_wrapper#getObject()
+	" es. let s:my_fucking_obj = multiple_cursors#common_text_wrapper#commonTextWrapper.New()
 	" now if you try to do:
 	"
 	" echo s:my_fucking_obj.test_msg
@@ -30,7 +30,6 @@ endif
 	let multiple_cursors#common_text_wrapper#commonTextWrapper = {}
 
 	" Prototype properties (getter/setter) {{{
-
 	" }}}
 
 	" Prototype methods {{{
@@ -40,15 +39,17 @@ endif
 			" Extends oopHandler to give base methods to this prototype
 			let l:commTextWrapp = extend(copy(self), g:oop_framework#oop_base#oopHandler.New(), "keep")
 
-			" ### OVERRIDING CLASSES AND METHODS OF oopHandler HERE ###
+			" ### OVERRIDING PROPERTIES AND METHODS FROM oopHandler HERE ###
+
 			" Prototype fields {{{
+
 				" current prototype name
 				let l:commTextWrapp["class_name"] = "multiple_cursors#common_text_wrapper#commonTextWrapper"
 
-				" field to show if this object is already sourced
+				" field to show if this prototype was already sourced
 				let l:commTextWrapp["loaded"] = 1
 
-				" specific fields for current object
+				" specific fields for current prototype
 				let l:commTextWrapp["base_window_buffer_id"] = ""
 				let l:commTextWrapp["coords_window_buffer_id"] = ""
 				let l:commTextWrapp["common_text_window_buffer_id"] = ""
@@ -78,7 +79,7 @@ endif
 		endfunction
 		" }}}
 
-		" Function to write common text in all of saved coords {{{
+		" Function to write common text in all saved coords {{{
 		function multiple_cursors#common_text_wrapper#commonTextWrapper.writeCommonText()
 
 			" retrieving common text
@@ -87,7 +88,7 @@ endif
 			endif
 			let l:common_text = self.getCommonText()
 
-			" for a corret writing the coords must be reordered, from biggest to smaller,
+			" the coords lists must be reordered, from biggest to smaller,
 			" in this way the coords number continue to be consistent
 			let l:coords_dictionary_ordered = self.ordered_coords_dictionary
 
@@ -95,9 +96,6 @@ endif
 			for rows in l:coords_dictionary_ordered['row_list']
 				for cols in l:coords_dictionary_ordered[rows]
 					call self.writeStrOnCoordinates(l:common_text, rows . ',' . cols)
-					" echo \"col: \" . cols . \" | row: " . rows
-					" echo \"common text: " .  l:common_text
-					" echo coord
 				endfor
 			endfor
 		endfunction
@@ -106,7 +104,7 @@ endif
 		" Function to write the string 'stringToWrite' starting from the coordinates 'coordinates' {{{
 		function multiple_cursors#common_text_wrapper#commonTextWrapper.writeStrOnCoordinates(stringToWrite, coordinates)
 
-			" split coordinates string 'row,col', inside a list
+			" split coordinates string 'row,col', into a list
 			if !exists("l:single_coordinates_list")
 				let l:single_coordinates_list = []
 			endif
@@ -114,11 +112,6 @@ endif
 
 			" switching to base window
 			exe bufwinnr(self.base_window_buffer_id) . "wincmd w"
-
-			"echo \"Writing of " . a:stringToWrite
-			"echo l:single_coordinates_list[0]
-			"echo l:single_coordinates_list[1]
-			"echo \"-----------------"
 
 			" moving cursor to column and row retrieved
 			call setpos(".", [0, l:single_coordinates_list[0], l:single_coordinates_list[1], 0])
