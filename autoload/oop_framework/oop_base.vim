@@ -85,6 +85,11 @@ endif
 			" 1 -> prototype successfully instantiated
 			let l:oopBaseInstance["status"] = 1
 
+			" debug mode
+			" 0 -> debug messages won't be printed
+			" 1 -> debug messages will be printed
+			let l:oopBaseInstance["debug"] = 0
+
 			" error flag
 			" 0 -> no error
 			" 1 -> error encountered
@@ -105,7 +110,9 @@ endif
 		function oop_framework#oop_base#oopHandler.logMsg(...)
 
 			if a:0 == 1
-				echom self.class_name . ": ". string(a:1)
+				if self.debug == 1
+					echom self.class_name . ": ". string(a:1)
+				endif
 			endif
 		endfunction
 		" }}}

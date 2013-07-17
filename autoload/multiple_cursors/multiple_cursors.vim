@@ -42,12 +42,15 @@ endif
 
 	" Init of multiple_cursors#buffers_wrapper#buffersWrapper prototype
 	let s:buff_obj = multiple_cursors#buffers_wrapper#buffersWrapper.New()
+	let s:buff_obj.debug = 0
 
 	" Init of multiple_cursors#cursors_wrapper#cursorsWrapper prototype
 	let s:cursors_obj = multiple_cursors#cursors_wrapper#cursorsWrapper.New()
+	let s:cursors_obj.debug = 0
 
 	" Init of multiple_cursors#common_text_wrapper#commonTextWrapper prototype
 	let s:text_obj = multiple_cursors#common_text_wrapper#commonTextWrapper.New()
+	let s:text_obj.debug = 0
 
 	" Function to create base user interface to play with this plugin, will be created two windows.
 	" First window contain the cursor coords, second window contain the text to write {{{
