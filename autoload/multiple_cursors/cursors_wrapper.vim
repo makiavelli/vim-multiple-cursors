@@ -61,11 +61,17 @@ endif
 		endfunction
 		" }}}
 
-		" Function to get the current cursor coords {{{
+		" Function to retrieve current cursor coords {{{
 		function multiple_cursors#cursors_wrapper#cursorsWrapper.getCursorXY()
 
 			" retrieve current cursor position
-			let l:current_cursor_position = getpos(".") " -> [bufnum, lnum, col, off]
+			let l:current_cursor_position = [0,0,0,0] 
+			" getpos(\".") " -> [bufnum, lnum, col, off]
+
+			let l:test = getpos("'<") " -> [bufnum, lnum, col, off]
+			let l:test1 = getpos("'>") " -> [bufnum, lnum, col, off]
+			call self.logMsg("line number -> " . string(l:test))
+			call self.logMsg("line number1 -> " . string(l:test1))
 
 			" convert coords list into string like this, 'line,column'
 			let l:coords_string = l:current_cursor_position[1] . "," . l:current_cursor_position[2]
@@ -102,7 +108,7 @@ endif
 		" further order values of this new dictionary crated {{{
 		function multiple_cursors#cursors_wrapper#cursorsWrapper.castCoordsListIntoDictionary()
 
-			" Casting a list of coords into dictionary, like this:
+			" NOTE: Casting a list of coords into dictionary, like this:
 			"
 			" ------------------- FROM ---------------------
 			" ['137,1', '123,12', '137,5', '112,9', '137,8']
