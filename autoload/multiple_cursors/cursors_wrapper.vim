@@ -65,13 +65,14 @@ endif
 		function multiple_cursors#cursors_wrapper#cursorsWrapper.getCursorXY()
 
 			" retrieve current cursor position
-			let l:current_cursor_position = [0,0,0,0] 
+			" let l:current_cursor_position = [0,0,0,0] 
 			" getpos(\".") " -> [bufnum, lnum, col, off]
+			let l:current_cursor_position = getpos(".")
 
-			let l:test = getpos("'<") " -> [bufnum, lnum, col, off]
-			let l:test1 = getpos("'>") " -> [bufnum, lnum, col, off]
-			call self.logMsg("line number -> " . string(l:test))
-			call self.logMsg("line number1 -> " . string(l:test1))
+			" let l:test = getpos("'<") " -> [bufnum, lnum, col, off]
+			" let l:test1 = getpos("'>") " -> [bufnum, lnum, col, off]
+			" call self.logMsg("line number -> " . string(l:test))
+			" call self.logMsg("line number1 -> " . string(l:test1))
 
 			" convert coords list into string like this, 'line,column'
 			let l:coords_string = l:current_cursor_position[1] . "," . l:current_cursor_position[2]

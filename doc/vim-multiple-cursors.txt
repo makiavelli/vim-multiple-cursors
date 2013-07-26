@@ -77,3 +77,38 @@ row,col
 
 To clean the script window the users must click on <F7>, 
 the editor will work in normal way.
+
+-----
+
+"vim-multiple-cursors" is a simple plugin that (permette) the writing of same
+text inside different parts of a document.
+
+==Mapping==
+	Default mapping is enable, if you want to disable auto mapping set "let g:multiple_cursors_map_keys = 0" 
+	at the end of your vimrc file.
+	<C-F3> key start the plugin and the user interface
+	<C-F4> key save current cursors set inside coords window
+	<C-F5> key write common text(the text that must be write in different position) in
+	every coord saved
+
+== How to use "vim-multiple-cursors" ==
+	The plugin works in this way:
+	First of all, try to edit a simple file, than, press <C-F3>, now you will
+	see three windows:
+	Top right window is the coords window, when you save a cursor set, the coords
+	will be saved inside this window, hereinafter referred to as 
+	"coords window"
+	Top left window, hereinafter referred to as 
+	"common text window", is the "conatiner" of the text that you want to write starting
+	from all coords saved inside coords window(the top right window).
+	The thirtd window, hereinafter referred to as 
+	"base window", is (sotto) the currently edited buffer
+	Now, if you try to move the cursor (nella) base window and press <C-F4>, you will see
+	that in the coors window verrà salvata la coordinata corrente del cursore, prova a salvare
+	diverse posizioni, spostando il cursore e premendo <C-F4> per salvare le posizioni.
+	Bene, a questo punto non resta che inserire del	testo da scrivere in tutte le posizioni salvate
+	nella common text window e premere <C-F5>
+	Fatto, ora vedrai che nelle posizioni salvate è presente il testo immesso nella common text window
+
+== Configuration ==
+let g:multiple_cursors_map_keys = 0

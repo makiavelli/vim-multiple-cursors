@@ -29,9 +29,9 @@
 
 	if g:multiple_cursors_map_keys
 		" internal mapping
-		vnoremap <C-F3> :call multiple_cursors#multiple_cursors#InitPlugin()
-		vnoremap <C-F4> <CR>:call multiple_cursors#multiple_cursors#SaveCoords()
-		vnoremap <C-F5> <CR>:call multiple_cursors#multiple_cursors#WriteText()<CR>
+		nnoremap <C-F3> :call multiple_cursors#multiple_cursors#InitPlugin()<CR>
+		nnoremap <C-F4> :call multiple_cursors#multiple_cursors#SaveCoords()<CR>
+		nnoremap <C-F5> :call multiple_cursors#multiple_cursors#WriteText()<CR>
 	endif
 
 	" Commands:
