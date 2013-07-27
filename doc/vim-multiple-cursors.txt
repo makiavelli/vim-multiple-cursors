@@ -1,79 +1,73 @@
 vim-multiple-cursors plugin
 ===========================
 
-How to play with multiple cursors plugin
+How to play with "vim-multiple-cursors" plugin
 ----------------------------------------
 
-- Run "MultipleCursors()"
-- In "Visual mode" select some position in which you want write the same thing with <F6>.
-- Enter in "Insert mode" and write your text, all position saved will be filled with your text.
-- Return to "Visual mode" and hit <F7> to clear all position previously saved.
-- If you want to power-off this plugin run "MultipleCursorsOff()"
+1) First of all, press <C-F3> to power-on "vim-multiple-cursors".
 
-The script works in this way
-----------------------------
-
-First of all current window will be split, like this:
-
----- Select some positions with <F6> ... ---
-  123456...
-+---------------------+
-|1 Some stuff	      |
-|2		      |
-|3		      |   -> Main window
-|4  #		      |
-|5     #	      |
-|---------------------|
-| 		      |   -> Script window
-|       	      |
+Press <C-F3>, you will see something like this:
++---------------+-----+
+| A		|  B  |
+|       	|     |
++---------------+-----+
+|	 	      | -> "vim-multiple-cursors" user interface
+|	C	      |
+|		      |
+|  		      |
+|     		      |
 +---------------------+
 
----- Before editing...you will show in the script window the selected positions ---
-  123456...
-+---------------------+
-|1 Some stuff	      |
-|2		      |
-|3		      |   -> Main window
-|4		      |
-|5		      |
-|---------------------|
-| 4,2		      |   -> Script window
-| 5,5		      |
+Legend:
+	A : common text window
+	B : coords window
+	C : base window
+
+2) Now save some cursor positon with <C-F4>
+
++---------------+-----+
+| A		| 1,3 | -> after pressing <C-F4>, you will see
+|       	| 3,2 |    some positions inside "coords window"
++---------------+-----+
+|Kitty ipsum dolor    |
+|sit amet, sleep on   |
+|your face give me    |
+|		      |
+|		      |
+|  		      |
+|     		      |
 +---------------------+
 
----- After editing... ---
-  123456...
-+---------------------+
-|1 Some stuff	      |
-|2		      |
-|3		      |   -> Main window
-|4  Fuck the world    |
-|5     Fuck the world |
-|---------------------|
-| 4,2		      |   -> Script window
-| 5,5		      |
+3) Enter some text in the "common text window"
+
+				+---------------+-----+
+Insert the text to write  <----	|@		| 1,3 |
+inside all position saved	|       	| 3,2 |
+inside "coords window" here	+---------------+-----+
+				|Kitty ipsum dolor    |
+				|sit amet, sleep on   |
+				|your face give me    |
+				|		      |
+				|		      |
+				|  		      |
+				|     		      |
+				+---------------------+
+
+4) Press <C-F5> to write the common text inside all position
+
++---------------+-----+
+|@		| 1,3 |
+|       	| 3,2 |
++---------------+-----+
+|Ki@tty ipsum dolor   |
+|sit amet, sleep on   | -> after you press <C-F5>, you will
+|y@our face give me   |    see that common text will be in 
+|		      |    all positions inside "coords window" 
+|		      |
+|  		      |
+|     		      |
 +---------------------+
 
----- Clear the script window with <F7>... ---
-  123456...
-+---------------------+
-|1 Some stuff	      |
-|2		      |
-|3		      |   -> Main window
-|4  Fuck the world    |
-|5     Fuck the world |
-|---------------------|
-| 		      |   -> Script window
-| 		      |
-+---------------------+
-
-
-In the script window will be inserted col, row of current
-cursor at the pression of <F6>, in this format:
-row,col
-row,col
-row,col
-row,col
 
 To clean the script window the users must click on <F7>, 
 the editor will work in normal way.
@@ -111,4 +105,89 @@ text inside different parts of a document.
 	Fatto, ora vedrai che nelle posizioni salvate è presente il testo immesso nella common text window
 
 == Configuration ==
-let g:multiple_cursors_map_keys = 0
+At the writing time, this document there aren't many configuration available,
+the only configuration flag is the "disable auto mapping" option.
+If you add this at the end of your vimrc file:
+	let g:multiple_cursors_map_keys = 0
+then auto mapping (<C-F3> <C-F4> and <C-F5>) will be disabled
+
+== Next steps ==
+Features to be impemented inside vim-multiple-cursors:
+- save coords also in the "visual mode"
+- function to power-off vim-multiple-cursors plugin
+- function to clear the coords window and common text window
+Now "coords window" accept only singe positions, in this format:
+	row,col 
+Next will be (possibile) define an interval between two
+coordinates, follow this two examples to (chiarire le idee):
+1)	3-6,3
+2)	6,12-18
+
+In the first example "3-6,3", (è stato definito) an interval
+between two rows, this means: from row 3 to row 6 and starting
+from column 3 write the "common text".
+In the second example "6,12-18", (è stato definito) an interval
+between two column, this means: in row 6, (al posto) of the text
+from column 12 to column 18 write the "common text".
+
+== ASCII screenshoot ==
+
+Before power-on "vim-multiple-cursors" plugin:
++---------------------------------------+
+|Kitty ipsum dolor sit amet, sleep on 	|
+|your face give me fish zzz tempus 	|
+|sollicitudin rhoncus, sleep on your 	|
+|keyboard libero non tincidunt a lay 	|
+|down in your way. Mauris a suspendisse |
+|biting orci turpis, consectetur quis 	|
+|dolor sleep on your keyboard 		|
+|sollicitudin feed me neque rutrum. 	|
+|Pharetra aliquam libero suscipit 	|
+|hairball hiss, chuf cras nec catnip	|
+|pellentesque libero. Give me fish 	|
+|dolor sunbathe consectetur climb the 	|
+|curtains, fluffy fur catnip mauris 	|
+|a sleep in the sink dolor claw nam. 	|
+|Tortor dolor sleep on your keyboard 	|
+|rutrum enim ut quis, iaculis jump 	|
+|on the table shed everywhere sniff 	|
+|catnip. Purr lay down in your way 	|
+|iaculis tristique, vel non rhoncus 	|
+|dolor sollicitudin bat sniff. 		|
+|					|
++---------------------------------------+
+
+After power-on "vim-multiple-cursors" plugin:
+
+	+------> "common text window"
+	|
+	|
++----------------------------+----------+
+| Fuck the world!	     |12,4	|
+|			     |1,1	|---------------+
+|			     |32,4	|		|
+|			     |		|		|
+|			     |		|		V
++----------------------------+----------+	"coords window"
+|Kitty ipsum dolor sit amet, sleep on 	|		
+|your face give me fish zzz tempus 	|
+|sollicitudin rhoncus, sleep on your 	|
+|keyboard libero non tincidunt a lay 	|
+|down in your way. Mauris a suspendisse |
+|biting orci turpis, consectetur quis 	|
+|dolor sleep on your keyboard 		|
+|sollicitudin feed me neque rutrum. 	|----------------
+|Pharetra aliquam libero suscipit 	|		|	
+|hairball hiss, chuf cras nec catnip	|		|
+|pellentesque libero. Give me fish 	|		V
+|dolor sunbathe consectetur climb the 	| 	  "base window"
+|curtains, fluffy fur catnip mauris 	|
+|a sleep in the sink dolor claw nam. 	|
+|Tortor dolor sleep on your keyboard 	|
+|rutrum enim ut quis, iaculis jump 	|
+|on the table shed everywhere sniff 	|
+|catnip. Purr lay down in your way 	|
+|iaculis tristique, vel non rhoncus 	|
+|dolor sollicitudin bat sniff. 		|
+|					|
++---------------------------------------+
