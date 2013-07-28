@@ -3,11 +3,11 @@ vim-multiple-cursors plugin
 makiavelli
 v0.1.0, July 2013
 
-"*vim-multiple-cursors*" is a simple plugin that allows you to the writing of same text inside different parts of a document.
+"*vim-multiple-cursors*" is a simple plugin that allows you to write the same text inside different parts of a document.
 
 == How to play with "vim-multiple-cursors" plugin ==
 
-=== 1) First of all, press *<C-F3>* to power-on "*vim-multiple-cursors*" ===
+.1) First of all, press *<C-F3>* to power-on "*vim-multiple-cursors*"
 
 After you'll press *<C-F3>*, you will see something like this:
 
@@ -29,7 +29,7 @@ After you'll press *<C-F3>*, you will see something like this:
 * [red]*B* : coords window
 * [red]*C* : base window
 
-=== 2) Now save some cursor positon with *<C-F4>* ===
+.2) Now save some cursor positon with *<C-F4>* +
 
 --------------------------------------
 +---------------+-----+
@@ -46,7 +46,7 @@ After you'll press *<C-F3>*, you will see something like this:
 +---------------------+
 --------------------------------------
 
-=== 3) Enter some text in the "*common text window*" ===
+.3) Enter some text in the "*common text window*" +
 
 --------------------------------------
 				+---------------+-----+
@@ -63,7 +63,7 @@ inside "coords window" here	+---------------+-----+
 				+---------------------+
 --------------------------------------
 
-=== 4) Press <C-F5> to write the common text inside all position ===
+.4) Press <C-F5> to write the common text inside all position +
 
 --------------------------------------
 +---------------+-----+
@@ -103,7 +103,7 @@ Done, now you will see your text in all coords saved.
 
 == Configuration ==
 
-At the writing time, this document there aren't many configuration available, the only configuration flag is the "disable auto mapping" option. +
+At the writing time, in this plugin there aren't available many configuration, the only configuration flag is the "disable auto mapping" option. +
 
 If you add this at the end of your vimrc file: +
 
@@ -180,14 +180,14 @@ After power-on "vim-multiple-cursors" plugin:
 
 == Next steps ==
 
-.Features to be impemented inside "vim-multiple-cursors" plugin:
+.Features to be implemented inside "vim-multiple-cursors" plugin:
 	- Save coords also in the "visual mode".
 	- Function to power-off "vim-multiple-cursors" plugin.
 	- Function to clear the coords window and common text window.
 
 Now "*coords window*" accept only single positions, in this format: *row,col*.
 
-.Next will be (possibile) define an interval between two coordinates, follow this two examples to (chiarire le idee):
+.Next will be possible define an interval between two coordinates, follow this two examples to clarifying ideas:
 * [red]*3-6,3*
 * [red]*6,12-18*
 
