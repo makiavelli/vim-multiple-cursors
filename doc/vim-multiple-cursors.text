@@ -1,0 +1,277 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+vim-multiple-cursors plugin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+makiavelli
+
+┌───────────────────────────────────────────────────────────────────┐
+│Revision History                                                   │
+├──────────────────────────────────────┬────────────────────────┬───┤
+│Revision 0.1.0                        │July 2013               │M  │
+└──────────────────────────────────────┴────────────────────────┴───┘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Table of Contents
+
+1. How to play with "vim-multiple-cursors" plugin
+2. Mapping
+3. "vim-multiple-cursors" User Interface
+4. Configuration
+5. ASCII screenshot
+6. Installation
+7. Next steps
+
+"vim-multiple-cursors" is a simple plugin that allows you to write
+the same text inside different parts of a document.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. How to play with "vim-multiple-cursors" plugin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1) First of all, press <C-F3> to power-on "vim-multiple-cursors". 
+After you’ll press <C-F3>, you will see something like this:
+
++---------------+-----+
+| A             |  B  |
+|               |     |
++---------------+-----+
+|                     | -> "vim-multiple-cursors" user interface
+|       C             |
+|                     |
+|                     |
+|                     |
++---------------------+
+
+  ● Legend:
+
+      ○ A : common text window
+      ○ B : coords window
+      ○ C : base window
+
+2) Now save some cursor positions with <C-F4>. 
+
++---------------+-----+
+| A             | 1,3 | -> after pressing <C-F4>, you will see
+|               | 3,2 |    some positions inside "coords window"
++---------------+-----+
+|Kitty ipsum dolor    |
+|sit amet, sleep on   |
+|your face give me    |
+|                     |
+|                     |
+|                     |
+|                     |
++---------------------+
+
+3) Enter some text in the "common text window". 
+
+                                +---------------+-----+
+Insert the text to write  <---- |@              | 1,3 |
+inside all position saved       |               | 3,2 |
+inside "coords window" here     +---------------+-----+
+                                |Kitty ipsum dolor    |
+                                |sit amet, sleep on   |
+                                |your face give me    |
+                                |                     |
+                                |                     |
+                                |                     |
+                                |                     |
+                                +---------------------+
+
+4) Press <C-F5> to write the common text inside all position. 
+
++---------------+-----+
+|@              | 1,3 |
+|               | 3,2 |
++---------------+-----+
+|Ki@tty ipsum dolor   |
+|sit amet, sleep on   | -> after you press <C-F5>, you will
+|y@our face give me   |    see that common text will be in
+|                     |    all positions inside "coords window"
+|                     |
+|                     |
+|                     |
++---------------------+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2. Mapping
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Default mapping is enabled, if you want to disable auto mapping
+please add "let g:multiple_cursors_map_keys = 0" at the end of your
+vimrc file.
+
+  ● <C-F3> key start the plugin and the user interface.
+  ● <C-F4> key save current cursors set inside coords window.
+  ● <C-F5> key write common text(the text that should be written in
+    different positions) in every coord saved.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3. "vim-multiple-cursors" User Interface
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Top right window: hereinafter referred to as "coords window", is the
+coords window, when you save a cursor set, the coords will be saved
+inside this window.
+
+Top left window: hereinafter referred to as "common text window", is
+the "container" of the text that you want to write starting from all
+coords saved inside coords window(the top right window).
+
+The third window: hereinafter referred to as "base window", is at the
+bottom of currently edited buffer.
+
+Now, if you try to move the cursor into base window and press <C-F4>,
+you will see that in the coors window will be saved the current
+cursor position, now try to save some cursor positions, move the
+cursor inside base window and press <C-F4> to save the coords.
+
+Good, at this point you just have to enter the text to be inserted in
+all locations saved inside the common text window and press <C-F5>.
+
+Done, now you will see your text in all coords saved.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4. Configuration
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+At the writing time, in this plugin there aren’t available many
+configuration, the only configuration flag is the "disable auto
+mapping" option.
+
+If you add this at the end of your vimrc file:
+
+let g:multiple_cursors_map_keys = 0
+
+then auto mapping (<C-F3> <C-F4> and <C-F5>) will be disabled.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5. ASCII screenshot
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before power-on "vim-multiple-cursors" plugin:
+
++---------------------------------------+
+|Kitty ipsum dolor sit amet, sleep on   |
+|your face give me fish zzz tempus      |
+|sollicitudin rhoncus, sleep on your    |
+|keyboard libero non tincidunt a lay    |
+|down in your way. Mauris a suspendisse |
+|biting orci turpis, consectetur quis   |
+|dolor sleep on your keyboard           |
+|sollicitudin feed me neque rutrum.     |
+|Pharetra aliquam libero suscipit       |
+|hairball hiss, chuf cras nec catnip    |
+|pellentesque libero. Give me fish      |
+|dolor sunbathe consectetur climb the   |
+|curtains, fluffy fur catnip mauris     |
+|a sleep in the sink dolor claw nam.    |
+|Tortor dolor sleep on your keyboard    |
+|rutrum enim ut quis, iaculis jump      |
+|on the table shed everywhere sniff     |
+|catnip. Purr lay down in your way      |
+|iaculis tristique, vel non rhoncus     |
+|dolor sollicitudin bat sniff.          |
+|                                       |
++---------------------------------------+
+
+After power-on "vim-multiple-cursors" plugin:
+
+        +------> "common text window"
+        |
+        |
++----------------------------+----------+
+| Fuck the world!            |12,4      |
+|                            |1,1       |---------------+
+|                            |32,4      |               |
+|                            |          |               |
+|                            |          |               V
++----------------------------+----------+       "coords window"
+|Kitty ipsum dolor sit amet, sleep on   |
+|your face give me fish zzz tempus      |
+|sollicitudin rhoncus, sleep on your    |
+|keyboard libero non tincidunt a lay    |
+|down in your way. Mauris a suspendisse |
+|biting orci turpis, consectetur quis   |
+|dolor sleep on your keyboard           |
+|sollicitudin feed me neque rutrum.     |----------------
+|Pharetra aliquam libero suscipit       |               |
+|hairball hiss, chuf cras nec catnip    |               |
+|pellentesque libero. Give me fish      |               V
+|dolor sunbathe consectetur climb the   |         "base window"
+|curtains, fluffy fur catnip mauris     |
+|a sleep in the sink dolor claw nam.    |
+|Tortor dolor sleep on your keyboard    |
+|rutrum enim ut quis, iaculis jump      |
+|on the table shed everywhere sniff     |
+|catnip. Purr lay down in your way      |
+|iaculis tristique, vel non rhoncus     |
+|dolor sollicitudin bat sniff.          |
+|                                       |
++---------------------------------------+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6. Installation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You can simply install "vim-multiple-cursors" with pathogen.vim in
+this way:
+
+cd ~/.vim/bundle git clone git://github.com/tpope/vim-fugitive.git
+
+You can view the manual with :help fugitive.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7. Next steps
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Features to be implemented inside "vim-multiple-cursors" plugin:
+
+  ● Save coords also in the "visual mode".
+  ● Function to power-off "vim-multiple-cursors" plugin.
+  ● Function to clear the coords window and common text window.
+  ● Save group of coords (read "Appendix A" for more information)
+
+Appendix A
+
+Now "coords window" accept only single positions, in this format:
+row,col.
+
+Next will be possible define an interval between two coordinates,
+follow this two examples to clarifying ideas:
+
+  ● 3-6,3
+  ● 6,12-18
+
+In the first example "3-6,3", has been defined as an interval between
+two rows, this means: from row 3 to row 6 and starting from column 3
+write the "common text".
+
+In the second example "6,12-18", has been defined as an interval
+between two column, this means: in row 6, instead of the text from
+column 12 to column 18 write the "common text".
+
