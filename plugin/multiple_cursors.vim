@@ -5,7 +5,7 @@
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
-"	If you want to write the same text in different points inside a file,
+"	If you want to write the same text in different parts inside a file,
 "	this plugin help you to do the trick.
 "
 "						*multiplecursor-settings*
