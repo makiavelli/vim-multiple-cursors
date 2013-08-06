@@ -178,6 +178,23 @@ After power-on "vim-multiple-cursors" plugin:
 +---------------------------------------+
 --------------------------------------
 
+== Installation ==
+
+You can simply install "*vim-multiple-cursors*" with *pathogen.vim* in this way:
+
+.How to install "vim-multiple-cursors"
+**************************************
+$cd ~/.vim/bundle +
+
+$git clone git://github.com/makiavelli/vim-multiple-cursors.git
+**************************************
+
+Once help tags *have been generated*, you can view the manual with:
+
+**************************************
+:help vim-multiple-cursors.
+**************************************
+
 == Next steps ==
 
 .Features to be implemented inside "vim-multiple-cursors" plugin:
@@ -191,7 +208,7 @@ After power-on "vim-multiple-cursors" plugin:
 **************************************
 Now "*coords window*" accept only single positions, in this format: *row,col*.
 
-.Next will be possible define an interval between two coordinates, follow this two examples to clarifying ideas:
+.Next will be possible to define an interval between two coordinates, follow this two examples to clarifying ideas:
 * [navy]*3-6,3*
 * [navy]*6,12-18*
 
@@ -200,3 +217,6 @@ In the first example "*3-6,3*", has been defined as an interval between two rows
 In the second example "*6,12-18*", has been defined as an interval between two column, this means: in row 6, instead of the text from column 12 to column 18 write the "*common text*".
 **************************************
 
+== License ==
+
+Copyright © makiavelli. Distributed under the same terms as Vim itself. See :help license.
