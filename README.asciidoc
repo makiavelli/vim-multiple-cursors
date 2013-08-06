@@ -33,7 +33,7 @@ After you'll press *<C-F3>*, you will see something like this:
 
 --------------------------------------
 +---------------+-----+
-| A		| 1,3 | -> after pressing <C-F4>, you will see
+| 		| 1,3 | -> after pressing <C-F4>, you will see
 |       	| 3,2 |    some positions inside "coords window"
 +---------------+-----+
 |Kitty ipsum dolor    |
