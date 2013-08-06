@@ -83,9 +83,9 @@ inside "coords window" here	+---------------+-----+
 == Mapping ==
 
 .Default mapping is enabled, if you want to disable auto mapping please add "let g:multiple_cursors_map_keys = 0" at the end of your vimrc file.
-* [navy]*<C-F3>* key start the plugin and the user interface.
-* [navy]*<C-F4>* key save current cursors set inside coords window.
-* [navy]*<C-F5>* key write common text(the text that should be written in different positions) in every coord saved.
+* [navy]*<C-F3>* to start the plugin and the user interface.
+* [navy]*<C-F4>* to save current cursors set inside coords window.
+* [navy]*<C-F5>* to write common text(the text that should be written in different positions) in all saved coords.
 
 == "vim-multiple-cursors" User Interface ==
 

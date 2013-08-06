@@ -2,32 +2,32 @@
 				different parts of a document.
 
 
-	CURRENT VERSION						*vim-multiple-cursors-version*
+CURRENT VERSION						*vim-multiple-cursors-version*
 
 	v0.1.0, July 2013
 
 
-	MAPPING							*vim-multiple-cursors-mapping*
+MAPPING							*vim-multiple-cursors-mapping*
 
 	Mappings:
 		<C-F3> :init of plugin and user interface.
-		<C-F4> :saving current cursors set inside coords window.
-		<C-F5> :writing common text(the text that should be written in different positions)
-		       in all coords saved.
+		<C-F4> :to save current cursors set inside coords window.
+		<C-F5> :to write common text(the text that should be written in different positions)
+		        in all saved coords.
 
 
-	SETTINGS						*vim-multiple-cursors-settings*
+SETTINGS						*vim-multiple-cursors-settings*
 
 	Disable auto mapping:
 		Add "let g:multiple_cursors_map_keys = 0" at the end of your vimrc file 
 		to disable auto mapping.
 
-	REPOSITORY 						*vim-multiple-cursors-repository*
-	
+REPOSITORY 						*vim-multiple-cursors-repository*
+
 	Take a look here:
 		https://github.com/makiavelli/vim-multiple-cursors
 
 
-	LICENSE							*vim-multiple-cursors-license*
+LICENSE							*vim-multiple-cursors-license*
 
 	Copyright © makiavelli. Distributed under the same terms as Vim itself. See :help license.
