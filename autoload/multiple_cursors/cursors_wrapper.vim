@@ -1,7 +1,7 @@
 "=============================================================================================
 "	vim-multiple-cursors package - Cursors position wrapper prototype
 "	Last Change: 2013 July 17
-"	Maintainer: makiavelli <name@mail.org>
+"	Maintainer: makiavelli <https://github.com/makiavelli/vim-multiple-cursors>
 "	License: This file is placed in the public domain.
 "	Version: 0.1.0
 "
