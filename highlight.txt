@@ -1,0 +1,15 @@
+
+How to highlight in VIM (by makiavelli):
+========================================
+
+- Create a mark with m{a-zA-Z}
+- Create an highlight group with :highlight MyGroup ctermbg=green guibg=green
+- Create a match with created mark :match MyGroup /\%'m/ (m is the mark name), but you can create maximum 3 match
+- Now the match will be highlighted
+
+
+NB: Instead of create a marker we can use directly this syntax inside match: /\%3l\%4c OR to match the true line number
+    /\%3l\%>4c\%<6c 
+
+Finally, if you want to create unlimited highlight, you can use the "matchadd" function in this way:
+:call matchadd("aa", '\%1l\%>4c\%<8c') 
