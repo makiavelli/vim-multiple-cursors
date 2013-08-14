@@ -149,7 +149,7 @@ endif
 					endif
 
 					" filling of first key 'row_list' with current row,
-					" but only if NOT already exists inside the list
+					" but if only NOT already exists
 					if !count(l:coords_dictionary['row_list'], l:single_coordinate_list[0])
 						let l:coords_dictionary['row_list'] = add(l:coords_dictionary['row_list'], l:single_coordinate_list[0])
 					endif

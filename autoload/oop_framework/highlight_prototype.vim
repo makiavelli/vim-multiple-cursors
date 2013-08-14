@@ -77,13 +77,13 @@ endif
 
 		" TODO: Function to create a new match starting from one line and one column,
 		"	this will create a single point selection
-		function oop_framework#highlight_prototype#highlightPrototype.CreateSinglePointSelection(col, row)
+		function oop_framework#highlight_prototype#highlightPrototype.CreateSinglePointSelection(row, col)
 
 			" creating highlight group
 			call self.CreateHighlightGroup()
 
 			" adding a new single point selection
-			call matchadd(self.highlight_group_name, '\%' . row . 'l\%' . col . 'c') 
+			call matchadd(self.highlight_group_name, '\%' . a:row . 'l\%' . a:col . 'c') 
 
 			return 1
 		endfunction

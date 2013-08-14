@@ -40,6 +40,10 @@ endif
 		let s:text_obj = {}
 	endif
 
+	if exists("s:highlight_obj")
+		let s:highlight_obj = {}
+	endif
+
 	" Init of multiple_cursors#buffers_wrapper#buffersWrapper prototype
 	let s:buff_obj = multiple_cursors#buffers_wrapper#buffersWrapper.New()
 	let s:buff_obj.debug = 0
@@ -51,6 +55,10 @@ endif
 	" Init of multiple_cursors#common_text_wrapper#commonTextWrapper prototype
 	let s:text_obj = multiple_cursors#common_text_wrapper#commonTextWrapper.New()
 	let s:text_obj.debug = 0
+
+	" Init of oop_framework#highlight_prototype#highlightPrototype prototype
+	let s:highlight_obj = oop_framework#highlight_prototype#highlightPrototype.New()
+	let s:highlight_obj.debug = 0
 
 	" Function to create base user interface to play with this plugin, will be created two windows.
 	" First window contain the cursor coords, second window contain the text to write {{{
@@ -87,7 +95,16 @@ endif
 
 	" Function to save the current cursor coords {{{
 	function! multiple_cursors#multiple_cursors#SaveCoords()
+
+		" saving current cursor position
 		call s:cursors_obj.saveCursorXY()
+
+		" retrieving current cursor X,Y
+		let l:single_coordinate_list = split(s:cursors_obj.getCursorXY(), ',')
+
+		" highlighting of current cursor position
+		call s:highlight_obj.CreateSinglePointSelection(l:single_coordinate_list[0], l:single_coordinate_list[1])
+
 		return 0
 	endfunction
 	" }}}
