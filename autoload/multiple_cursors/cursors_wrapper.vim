@@ -100,7 +100,7 @@ endif
 			" else if (l:point_a[lnum] = l:point_b[lnum] && l:point_a[col] != l:point_b[col])
 			" 	- vertical selection
 			" else if (l:point_a[lnum] != l:point_b[lnum])
-			" 	- orizzontal selection
+			" 	- horizzontal selection
 
 			call self.logMsg("point a (x,y) -> (" . string(l:point_a_details["col"]) . "," . string(l:point_a_details["lnum"]) . ")")
 			call self.logMsg("point b (x,y) -> (" . string(l:point_b_details["col"]) . "," . string(l:point_b_details["lnum"]) . ")")
