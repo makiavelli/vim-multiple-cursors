@@ -81,6 +81,34 @@ endif
 		endfunction
 		" }}}
 
+		" TODO: Function to retrieve current cursor coords {{{
+		function multiple_cursors#cursors_wrapper#cursorsWrapper.getCursorXYVmap()
+
+			" retrieve current cursor position
+			" let l:current_cursor_position = [0,0,0,0] 
+			" getpos(\".") " -> [bufnum, lnum, col, off]
+			" let l:current_cursor_position = getpos(".")
+
+			let l:point_a = getpos("'<") " -> [bufnum, lnum, col, off]
+			let l:point_b = getpos("'>") " -> [bufnum, lnum, col, off]
+
+			let l:point_a_details = {"bufnum" : l:point_a[0], "lnum" : l:point_a[1], "col" : l:point_a[2], "off" : l:point_a[3]}
+			let l:point_b_details = {"bufnum" : l:point_b[0], "lnum" : l:point_b[1], "col" : l:point_b[2], "off" : l:point_b[3]}
+
+			" if (l:point_a = l:point_b)
+			" 	- single point selection
+			" else if (l:point_a[lnum] = l:point_b[lnum] && l:point_a[col] != l:point_b[col])
+			" 	- vertical selection
+			" else if (l:point_a[lnum] != l:point_b[lnum])
+			" 	- orizzontal selection
+
+			call self.logMsg("point a (x,y) -> (" . string(l:point_a_details["col"]) . "," . string(l:point_a_details["lnum"]) . ")")
+			call self.logMsg("point b (x,y) -> (" . string(l:point_b_details["col"]) . "," . string(l:point_b_details["lnum"]) . ")")
+
+			return 1
+		endfunction
+		" }}}
+
 		" Function to retrieve all saved cursor coords
 		" - switch to previously coords window buffer
 		" - read all line with :getline(1, '$')

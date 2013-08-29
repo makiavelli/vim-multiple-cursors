@@ -31,6 +31,7 @@
 		" internal mapping
 		nnoremap <C-F3> :call multiple_cursors#multiple_cursors#InitPlugin()<CR>
 		nnoremap <C-F4> :call multiple_cursors#multiple_cursors#SaveCoords()<CR>
+		vnoremap <C-F4> <esc>:call multiple_cursors#multiple_cursors#GetCoords()<CR>
 		nnoremap <C-F5> :call multiple_cursors#multiple_cursors#WriteText()<CR>
 	endif
 
