@@ -89,18 +89,40 @@ endif
 			" getpos(\".") " -> [bufnum, lnum, col, off]
 			" let l:current_cursor_position = getpos(".")
 
+				call self.logMsg("mode: " . mode("1"))
+			" identify visual mode
+			if (mode() == "\<C-v>")
+				call self.logMsg("char selection")
+			elseif (mode() == "\<C-V>")
+				call self.logMsg("line selection")
+			elseif (mode() == "\<C-CTRL-V>")
+				call self.logMsg("block selection")
+			endif
+
 			let l:point_a = getpos("'<") " -> [bufnum, lnum, col, off]
 			let l:point_b = getpos("'>") " -> [bufnum, lnum, col, off]
 
 			let l:point_a_details = {"bufnum" : l:point_a[0], "lnum" : l:point_a[1], "col" : l:point_a[2], "off" : l:point_a[3]}
 			let l:point_b_details = {"bufnum" : l:point_b[0], "lnum" : l:point_b[1], "col" : l:point_b[2], "off" : l:point_b[3]}
 
+			" Identify selection type
 			" if (l:point_a = l:point_b)
 			" 	- single point selection
 			" else if (l:point_a[lnum] = l:point_b[lnum] && l:point_a[col] != l:point_b[col])
 			" 	- vertical selection
 			" else if (l:point_a[lnum] != l:point_b[lnum])
 			" 	- horizzontal selection
+
+			if (l:point_a_details == l:point_b_details)
+				"- single point selection
+				"call self.logMsg("single point selection")
+			elseif (l:point_a_details["col"] == l:point_b_details["col"] && l:point_a_details["lnum"] != l:point_b_details["lnum"] )
+				"- vertical selection
+				"call self.logMsg("vertical selection")
+			elseif (l:point_a_details["lnum"] != l:point_b_details["lnum"])
+				"- horizzontal selection
+				"call self.logMsg("horizzontal selection")
+			endif
 
 			call self.logMsg("point a (x,y) -> (" . string(l:point_a_details["col"]) . "," . string(l:point_a_details["lnum"]) . ")")
 			call self.logMsg("point b (x,y) -> (" . string(l:point_b_details["col"]) . "," . string(l:point_b_details["lnum"]) . ")")
