@@ -17,6 +17,16 @@ if exists('cursorsWrapperLoaded')
 	finish
 endif
 
+" prototype dependencies
+if exists("s:selections_obj")
+	let s:selections_obj = {}
+endif
+
+"TODO: works on this...
+" Init of multiple_cursors#buffers_wrapper#buffersWrapper prototype
+let s:selections_obj = oop_framework#selections_prototype#selectionsPrototype.New()
+let s:selections_obj.debug = 1
+
 " cursorsWrapper prototype {{{
 
 	"==================================================
@@ -89,15 +99,8 @@ endif
 			" getpos(\".") " -> [bufnum, lnum, col, off]
 			" let l:current_cursor_position = getpos(".")
 
-				call self.logMsg("mode: " . mode("1"))
-			" identify visual mode
-			if (mode() == "\<C-v>")
-				call self.logMsg("char selection")
-			elseif (mode() == "\<C-V>")
-				call self.logMsg("line selection")
-			elseif (mode() == "\<C-CTRL-V>")
-				call self.logMsg("block selection")
-			endif
+			" call s:selections_obj.__SetVisualMode()
+			" TODO call s:selections_obj.GetSelectionLimits()
 
 			let l:point_a = getpos("'<") " -> [bufnum, lnum, col, off]
 			let l:point_b = getpos("'>") " -> [bufnum, lnum, col, off]
