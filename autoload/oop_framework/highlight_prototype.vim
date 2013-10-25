@@ -54,7 +54,7 @@ endif
 
 				" specific fields for current prototype
 				" highlight group name
-				let l:highlightPrototype["highlight_group_name"] = "vim_multiple_cursors_highlight_group"
+				let l:highlightPrototype["highlight_group_name"] = "oop_framework_highlight_group"
 
 				" highlight group ctermbg value (default = green)
 				let l:highlightPrototype["highlight_group_ctermbg"] = "green"
@@ -62,16 +62,76 @@ endif
 				" highlight group guibg value (default = green)
 				let l:highlightPrototype["highlight_group_guibg"] = "green"
 
+				" start/end highlight points
+				let l:highlightPrototype["point1_x"] = ""
+				let l:highlightPrototype["point1_y"] = ""
+				let l:highlightPrototype["point2_x"] = ""
+				let l:highlightPrototype["point2_y"] = ""
+
+				" highlight type: char/line/block, default empty string
+				let l:highlightPrototype["highlight_type"] = ""
+
+				" highlight consts: char/line/block
+				let l:highlightPrototype["highlight_type_constants"] = { "v" : "char", "V" : "line", "" : "block" }
+
 			" }}} Prototype fields end
 			return l:highlightPrototype
 		endfunction
 		" }}}
 
-		" TODO: Function to create an highlight group
+		" Function to create an highlight group
 		function oop_framework#highlight_prototype#highlightPrototype.CreateHighlightGroup()
 
 			call self.logMsg("normal! :highlight " . self.highlight_group_name . " ctermbg=" . self.highlight_group_ctermbg . " guibg=" . self.highlight_group_guibg . "\<Esc>")
 			exe "normal! :highlight " . self.highlight_group_name . " ctermbg=" . self.highlight_group_ctermbg . " guibg=" . self.highlight_group_guibg . "\<Esc>"
+			return 1
+		endfunction
+
+		" Function to clear saved start/end points inside this prototype
+		function oop_framework#highlight_prototype#highlightPrototype.__ResetStartEndPoints()
+
+			self.point1_x = ""
+			self.point1_y = ""
+			self.point2_x = ""
+			self.point2_y = ""
+
+			return 1
+		endfunction
+
+		" Function to setting start/end points inside this prototype
+		function oop_framework#highlight_prototype#highlightPrototype.__SetStartEndPoints(pointsDictionary)
+
+			" reset saved start/end points
+			call self.__ResetStartEndPoints()
+
+			if a:pointsDictionary["point1_x"]
+				self.point1_x = a:pointsDictionary["point1_x"]
+			endif
+
+			if a:pointsDictionary["point1_y"]
+				self.point1_y = a:pointsDictionary["point1_y"]
+			endif
+
+			if a:pointsDictionary["point2_x"]
+				self.point2_x = a:pointsDictionary["point2_x"]
+			endif
+
+			if a:pointsDictionary["point2_y"]
+				self.point2_y = a:pointsDictionary["point2_y"]
+			endif
+
+			return 1
+		endfunction
+
+		" Function to setting highlight type for this prototype
+		function oop_framework#highlight_prototype#highlightPrototype.__SetHighlightType(highlightType)
+
+			let self.highlight_type = ""
+
+			if a:highlightType
+				self.highlight_type = a:highlightType
+			endif
+
 			return 1
 		endfunction
 
@@ -88,28 +148,26 @@ endif
 			return 1
 		endfunction
 
-		" TODO: Function to create a new match between two or more line and one or more column,
-		"	this will create a vertical selection
-		function oop_framework#highlight_prototype#highlightPrototype.CreateVerticalSelection(col, fromRow, toRow)
+		" TODO: Function to create a new line selection
+		function oop_framework#highlight_prototype#highlightPrototype.CreateLineSelection(col, fromRow, toRow)
 
 			" creating highlight group
 			call self.CreateHighlightGroup()
 
 			" adding a new single point selection
-			call matchadd(self.highlight_group_name, '\%>' . fromRow . 'l\%<' . toRow . 'l\%<' . col . 'c') 
+			call matchadd(self.highlight_group_name, '\%>' . a:fromRow . 'l\%<' . a:toRow . 'l\%<' . a:col . 'c') 
 
 			return 1
 		endfunction
 
-		" TODO: Function to create a new match starting from one line and one or more column,
-		"	this will create an horizontal selection
-		function oop_framework#highlight_prototype#highlightPrototype.CreateHorizontalSelection(fromCol, toCol, row)
+		" TODO: Function to create a new block selection
+		function oop_framework#highlight_prototype#highlightPrototype.CreateBlockSelection(fromCol, toCol, row)
 
 			" creating highlight group
 			call self.CreateHighlightGroup()
 
 			" adding a new single point selection
-			call matchadd(self.highlight_group_name, '\%' . row . 'l\%<' . fromCol . 'c') 
+			call matchadd(self.highlight_group_name, '\%' . a:row . 'l\%<' . a:fromCol . 'c') 
 
 			return 1
 		endfunction
@@ -122,13 +180,16 @@ endif
 			call self.CreateHighlightGroup()
 
 			" adding a new single point selection
-			call matchadd(self.highlight_group_name, '\%' . row . 'l\%' . col . 'c') 
+			call matchadd(self.highlight_group_name, '\%' . row . 'l\%' . col . 'c')
 
 			return 1
 		endfunction
 
 		" TODO: Function to clear all highlight
 		function oop_framework#highlight_prototype#highlightPrototype.ClearAllSelections()
+			call clearmatches()
+
+			return 1
 		endfunction
 	" }}} Prototype methods end
 	" Prototype properties (getter/setter) {{{

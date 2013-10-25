@@ -21,11 +21,18 @@ endif
 if exists("s:selections_obj")
 	let s:selections_obj = {}
 endif
+if exists("s:highlight_obj")
+	let s:highlight_obj = {}
+endif
 
 "TODO: works on this...
-" Init of multiple_cursors#buffers_wrapper#buffersWrapper prototype
+" Init of oop_framework#selections_prototype#selectionsPrototype prototype
 let s:selections_obj = oop_framework#selections_prototype#selectionsPrototype.New()
 let s:selections_obj.debug = 1
+
+" Init of oop_framework#highlight_prototype#highlightPrototype prototype
+let s:highlight_obj = oop_framework#selections_prototype#selectionsPrototype.New()
+let s:highlight_obj.debug = 1
 
 " cursorsWrapper prototype {{{
 
@@ -99,14 +106,9 @@ let s:selections_obj.debug = 1
 			" getpos(\".") " -> [bufnum, lnum, col, off]
 			" let l:current_cursor_position = getpos(".")
 
-			" call s:selections_obj.__SetVisualMode()
-			" TODO call s:selections_obj.GetSelectionLimits()
+			let l:limits_dictionary = s:selections_obj.GetVisualModeLimits()
 
-			let l:point_a = getpos("'<") " -> [bufnum, lnum, col, off]
-			let l:point_b = getpos("'>") " -> [bufnum, lnum, col, off]
-
-			let l:point_a_details = {"bufnum" : l:point_a[0], "lnum" : l:point_a[1], "col" : l:point_a[2], "off" : l:point_a[3]}
-			let l:point_b_details = {"bufnum" : l:point_b[0], "lnum" : l:point_b[1], "col" : l:point_b[2], "off" : l:point_b[3]}
+			call self.logMsg("limits dictionary: " . string(l:limits_dictionary))
 
 			" Identify selection type
 			" if (l:point_a = l:point_b)

@@ -54,11 +54,17 @@
 				let l:prototype["debug"] = 1
 
 				" specific fields for current prototype
+
+				" visual mode constants
+				let l:prototype["char_visual_mode"] = "char"
+				let l:prototype["line_visual_mode"] = "line"
+				let l:prototype["block_visual_mode"] = "block"
+
 				" current selection mode
 				let l:prototype["current_visual_mode"] = ""
 
 				" dictionary for visual mode name
-				let l:prototype["visual_mode_map"] = { "v" : "char", "V" : "line", "" : "block" }
+				let l:prototype["visual_mode_map"] = { "v" : l:prototype["char_visual_mode"], "V" : l:prototype["line_visual_mode"], "" : l:prototype["block_visual_mode"] }
 
 				" limits retrieved
 				let l:prototype["point1_x"] = ""
@@ -118,7 +124,15 @@
 			" settings all limits inside this prototype
 			let self.point1_x = l:point_a_details["col"]
 			let self.point1_y = l:point_a_details["lnum"]
-			let self.point2_x = l:point_b_details["col"]
+
+			" if self.current_visual_mode == line
+			" 	then the x of second cursor tends to '$'
+			if self.current_visual_mode == self.line_visual_mode
+				let self.point2_x = "$"
+			elseif
+				let self.point2_x = l:point_b_details["col"]
+			endif
+
 			let self.point2_y = l:point_b_details["lnum"]
 
 			call self.logMsg("point a (x,y) -> (" . string(l:point_a_details["col"]) . "," . string(l:point_a_details["lnum"]) . ")")
@@ -138,7 +152,7 @@
 		endfunction
 		" }}}
 
-		" Function to get cursors limit about visual char mode.
+		" Function to retrieve cursors limit about visual mode.
 		" This function return a dictionary like this:
 		" Example of dictionary retrieved:
 		" 	{ 
@@ -149,19 +163,17 @@
 		" 		'visual_mode_name' : 'char'
 		" 	 }
 		" {{{
-		function oop_framework#selections_prototype#selectionsPrototype.GetVisualModeCharLimits()
+		function oop_framework#selections_prototype#selectionsPrototype.GetVisualModeLimits()
 
 			" setting visual mode and cursors limit inside this prototype
 			call self.__SetSelectionLimits()
 
 			" TODO: make a dictionary like the example ones
+			let l:limits_dictionary = { 'point1_x' : self.point1_x, 'point1_y' : self.point1_y, 'point2_x' : self.point2_x, 'point2_y' : self.point2_y, 'visual_mode_name' : self.current_visual_mode }
 
-			return self.current_visual_mode
+			return l:limits_dictionary
 		endfunction
 		" }}}
-
-		" TODO: make a function to indentify current visual mode and
-		" retrieve cursor limits
 	" }}}
 " }}} Prototype prototype end
 
